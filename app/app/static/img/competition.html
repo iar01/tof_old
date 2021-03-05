@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% load staticfiles i18n competitions_extras %}
+
+{% block head %}
+  <link href="{{ STATIC_URL }}{% static 'competitions/css/competitions.css' %}" rel="stylesheet">
+  <link href="{{ STATIC_URL }}{% static 'feeds/css/feeds.css' %}" rel="stylesheet">
+  <script src="{{ STATIC_URL }}{% static 'competitions/js/competitions.js' %}"></script>
+    <link rel="import" href="{{ STATIC_URL }}{% static 'bower_components/iron-flex-layout/iron-flex-layout.html' %}">
+    
+    <link rel="import" href="{{ STATIC_URL }}{% static 'bower_components/paper-styles/color.html' %}">
+ <link rel="import" href="{{ STATIC_URL }}{% static 'bower_components/paper-dialog/paper-dialog.html' %}">
+  <link rel="import" href="{{ STATIC_URL }}{% static 'bower_components/paper-fab/paper-fab.html' %}">
+ <link rel="import" href="{{ STATIC_URL }}{% static 'bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html' %}">
+
+  <style is="custom-style">
+    paper-scroll-header-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding:inherit;
+      background-color: var(--paper-grey-200, #eee);
+    }
+    paper-toolbar {
+      background-color: var(--google-blue-500, #4285f4);
+    }
+    paper-toolbar .title {
+      margin-left: 60px;
+    }
+    .content {
+      padding: 8px;
+    }
+    .spacer {
+      @apply(--layout-flex);
+    }
+  </style>
+
+{% endblock head %}
+
+{% block sidebar %}
+
+<div class="nano-content" tabindex="0">
+      {% include 'competitions/partial_ranking_sidebar.html' with competition=competition %}
+    </div>
+
+ {% endblock sidebar %}   
+
+{% block main %}
+
+<section onclick="clickHandler(event)">   
+<div>
+  
+    <paper-material elevation="2">
+       
+    <paper-toolbar class="tall">
+        
+  <div class="title csrf-holder" data-csrf="{{ csrf_token }}">
+    <h1>{{ competition.title }}</h1>
+   
+  </div>
+  <paper-button toggles raised class="bottom" data-dialog="about">About</paper-button>
+  
+   <paper-button toggles raised class="bottom">Scoring Criteria</paper-button>
+  
+   <paper-button toggles raised class="bottom">Judge Panel</paper-button>
+ 
+   <paper-button  toggles raised class="bottom">Terms and Conditions</paper-button>
+ 
+  <div >
+    {% is_user_can_take_part competition=competition user=user as can_take_part %}
+    {% if can_take_part.can_post %}
+     
+        
+          <div class="mar-top-clearfix">
+              
+          <!--  <button type="button" class="btn btn-primary pull-right btn-compose">
+              <span class="glyphicon glyphicon-share-alt"></span> {% trans 'Take part' %}
+            </button>
+          </div>
+          -->
+       <!-- <paper-button raised data-dialog="dialog" class ="btn-compose"><iron-icon icon="file-upload"></iron-icon>Take Part</paper-button>
+         --><paper-fab data-dialog="dialog" icon="add" class ="btn-compose">{% trans 'Take part' %}</paper-fab>
+    {% else %}
+    <paper-fab data-dialog="part" icon="add" ></paper-fab>
+    {% endif %}
+    <paper-dialog id="dialog">
+        <paper-dialog-scrollable>
+    <div>
+      <h2>{% trans "Add your entry" %}</h2>
+
+      <form role="form" method="post" action="{% url 'competitions:add_entry' competition_id=competition.id %}"
+            id="entry-form" data-type="{{ competition.type }}">
+        {% csrf_token %}
+        <div class="form-group">
+          <textarea class="form-control" rows="1" name="post">Enter Caption</textarea>
+        </div>
+        {% if competition.type == 'img' %}
+          <input type="hidden" name="image">
+          <div id="direct_upload">
+            <button id="btn-upload" type="button" class="btn btn-primary" title="Upload"
+                    style="display: none;">{% trans 'Upload' %}</button>
+            <span class="status_value"></span>
+            <button type="button" class="btn-filechose btn btn-primary pull-right" title="Upload">
+              <input class="fileupload" type="file" name="files">
+            </button>
+            <div class="imagepreview" style="display: none;">
+              <img src="" width="50%" height="50%"style="padding: 5px 0;"/>
+            </div>
+          </div>
+          {% elif competition.type == 'vid' %}
+          <input type="hidden" name="video_url">
+          <div id="video_upload">
+            <button id="btn-video-upload" type="button" class="btn btn-primary" title="Upload"
+                    style="display: none;">{% trans 'Upload' %}</button>
+            <span class="status_value"></span>
+            <button type="button" class="btn-filechose btn btn-primary pull-right" title="Upload">
+              <input class="fileupload" type="file" name="files">
+            </button>
+            <div align="center" class="videopreview embed-responsive embed-responsive-16by9" style="display: none;">
+              <video width="100%" controls="controls">
+              </video>
+            </div>
+          </div>
+        {% endif %}
+       
+   
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-post">
+            <span class="glyphicon glyphicon-send"></span> {% trans 'Post' %}
+          </button>
+          <button type="button" class="btn btn-default btn-cancel-compose">{% trans 'Cancel' %}</button>
+        </div>
+       
+      </form>
+    </div>
+        </paper-dialog-scrollable>
+        </paper-dialog>
+  </div>
+ 
+ 
+ 
+  </paper-toolbar>
+  </div>
+ </paper-material>
+      
+ 
+  <div class="row">
+      
+    <div>
+        
+      <ul class="stream">
+        {% for feed in competition.feed_set.all %}
+          <div class="col-md-6">
+            {% include 'feeds/partial_feed.html' with feed=feed %}
+          </div>
+        {% endfor %}
+      </ul>
+   
+    </div>
+   
+  </div>
+
+   </div>
+ 
+ <paper-dialog id="about">
+     
+     <h1> RULES ajsdkjsdlaksjdas</h1>
+ </paper-dialog>
+ <paper-dialog id="part">
+     
+     <h1> Only one entry is allowed</h1>
+ </paper-dialog>
+  </section >
+ <script>
+    function clickHandler(e) {
+      var button = e.target;
+      while (!button.hasAttribute('data-dialog') && button !== document.body) {
+        button = button.parentElement;
+      }
+      if (!button.hasAttribute('data-dialog')) {
+        return;
+      }
+      var id = button.getAttribute('data-dialog');
+      var dialog = document.getElementById(id);
+      if (dialog) {
+        dialog.open();
+      }
+    }
+  </script>
+{% endblock main %}

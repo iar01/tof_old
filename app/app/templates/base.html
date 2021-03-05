@@ -1,0 +1,225 @@
+{% load i18n staticfiles %}
+
+<html lang="en">
+<head>
+ <script>
+  
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-58425466-1', 'auto');
+  ga('send', 'pageview');
+
+</script>        
+    
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="fb:app_id"        content="1686173174962992"/>
+    <meta property="og:type"          content="article" />
+	<meta property="og:title"         content="Please vote for me" />
+    <meta property="og:image" content="{{ STATIC_URL }}{% static 'img/Capture.png' %}" />
+	<meta property="og:description"   content="Please Vote for me" />
+
+	
+  <title>{% block title %}The Online Fest{% endblock %}</title>
+  <link rel="icon" type="image/png" href="{{ STATIC_URL }}{% static 'img/favicon.png' %}">
+  <!-- <link href="{{ STATIC_URL }}{% static 'css/bootstrap.min.css' %}" rel="stylesheet"> -->
+  <link href="{{ STATIC_URL }}{% static 'css/bootcamp.css' %}" rel="stylesheet">
+  <link href="{{ STATIC_URL }}{% static 'activities/css/notifications.css' %}" rel="stylesheet">
+
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+
+    <!-- MOVE -->
+  <script src="{{ STATIC_URL }}{% static 'js/jquery-2.1.1.min.js' %}"></script>
+  <script src="{{ STATIC_URL }}{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{{ STATIC_URL }}{% static 'js/bootcamp.js' %}"></script>
+
+  <!--Font Awesome [ OPTIONAL ]-->
+  <link href="{{ STATIC_URL }}{% static 'plugins/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+
+
+  <!--Switchery [ OPTIONAL ]-->
+  <link href="{{ STATIC_URL }}{% static 'plugins/switchery/switchery.min.css' %}" rel="stylesheet">
+
+
+  <!--Bootstrap Select [ OPTIONAL ]-->
+<!--   <link href="{{ STATIC_URL }}{% static 'plugins/bootstrap-select/bootstrap-select.min.css' %}" rel="stylesheet"> -->
+<!-- end MOVE -->
+
+<!-- NEW -->
+<!--  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js">
+-->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{{ STATIC_URL }}{% static 'css/styles.css' %}">
+    <style>
+    #view-source {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 40px;
+      margin-bottom: 40px;
+      z-index: 900;
+    }
+    </style>
+
+<!-- /NEW -->
+
+
+  {% block head %}
+  {% endblock head %}
+</head>
+<body class="fullbleed vertical layout" >
+
+{% block body %}
+
+
+<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+      <header class="demo-header mdl-layout__header mdl-color--indigo-400 mdl-color-text--grey-900">
+        <div class="mdl-layout__header-row">
+          
+          <a id="notifications" class='dropdown-button' href='#' data-activates='dropdown1'><i class="material-icons">notifications</i></a>
+          <div style="text-allign:center;margin:auto">
+           {% block title2 %}
+                            <!-- <div class="title"></div> -->
+                            {% endblock title2 %}
+          </div>
+                            
+  <!-- Dropdown Structure -->
+  
+          <div id='dropdown1' style="min-width:250px;margin-top:10px;color:#fff" class='dropdown-content popover-content'>            
+         <div class="mdl-layout__drawer-button"><i class="material-icons" style="margin:10px">menu</i></div>
+          </div>
+
+          <div class="mdl-layout-spacer"></div>
+      <!--
+          <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
+            <i class="material-icons">more_vert</i>
+          </button>
+          -->
+          <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
+            <li class="mdl-menu__item">About</li>
+            <li class="mdl-menu__item">Contact</li>
+            <li class="mdl-menu__item">Legal information</li>
+          </ul>
+        </div>
+      </header>
+
+<div class="demo-drawer mdl-layout__drawer mdl-color--indigo-600">
+<div style="margin-top:10px" class="center-align">
+  <img src="{{ STATIC_URL }}{% static 'img/logo9.png' %}" height="42" width="80">
+</div>
+                    
+  <header class="demo-drawer-header">
+
+    <div class="demo-avatar-dropdown">
+        <img src=" {{ user.profile.get_picture }} " class="demo-avatar">
+      <span class="sidebar_username" style="color:#fff">{{user.first_name}}</span>
+      <div class="mdl-layout-spacer"></div>
+      <button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons"style="color:#fff" role="presentation">arrow_drop_down</i>
+        <span class="visuallyhidden">Accounts</span>
+      </button>
+      <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
+        <li class="mdl-menu__item"><a href="{% url 'settings' %}" id="tt2" ><i class="material-icons">settings</i><span class="sidebar_setting_items">Settings</span></a></li>
+        <li class="mdl-menu__item"><a href="{% url 'logout' %}" id="tt3" ><i class="material-icons">power_settings_new</i><span class="sidebar_setting_items">Log out</span></a></li>
+      </ul>
+    </div>
+  </header>
+  <nav class="demo-navigation mdl-navigation mdl-color--grey-50 mdl-color-text--grey-900">
+    <!-- <a class="mdl-navigation__link" href="home.html"><i class="mdl-color-text--blue-grey-400 fa fa-2x fa-users" role="presentation" style="margin-right:20px;"></i>Talent Feed</a> -->
+    <!-- <a class="mdl-navigation__link" href="competitions.html"><i class="mdl-color-text--blue-grey-400 fa fa-2x fa-flag-checkered" role="presentation" style="margin-right:20px;"></i>Competitions</a> -->
+     <a href="{% url 'feeds' %}" onClick="window.location.href = {% url 'feeds' %}" class="mdl-navigation__link mdl-color-text--grey-900 {% ifequal request.path '/feeds/'%} is-active {% endifequal%}">{% trans 'Talent Feed' %}</a>
+     <a onClick="window.location.href = {% url 'competitions:categories' %}" href="{% url 'competitions:categories' %}" class="mdl-navigation__link mdl-color-text--grey-900 {% ifequal request.path '/competitions/'%} is-active {% endifequal%}">Competitions</a>
+     <a onClick="window.location.href = '{% url 'competitions:results_page' %}'"  href="{% url 'competitions:results_page' %}" class="mdl-navigation__link mdl-color-text--grey-900 {% ifequal request.path '/competitions/results_page/'%} is-active {% endifequal%}">Results</a>
+       {% block sidebar %}
+
+                        {% endblock sidebar %}
+  </nav>
+  
+</div>
+
+
+<main class="mdl-layout__content mdl-color--grey-200  ">
+        <div class="mdl-grid demo-content ">
+                     
+             
+               
+                <div class="mdl-tabs__panel is-active" id="{% url 'feeds' %}">
+                    <!-- //= templates/talent_feed.html -->
+                  </div>
+                  <div class="mdl-tabs__panel" id="{% url 'competitions:categories' %}">
+                    <!-- //= templates/categories.html -->
+                  </div>
+                  <div class="mdl-tabs__panel" id="all_competitions">
+                    <!-- //= templates/categories.html -->
+                  </div>
+                  <div class="mdl-tabs__panel" id="{% url 'competitions:results_page' %}">
+                    <!-- //= templates/results.html -->
+                  </div>
+             {% block main %}
+                {% endblock main %}
+        </div>
+      </main>
+
+
+</div>    
+<script>
+    toggleRightDrawer = function() { var drawerPanel = document.getElementById('rightDrawerPanel'); if (drawerPanel.narrow) { drawerPanel.togglePanel(); } };
+    </script>
+
+
+  <script src="{{ STATIC_URL }}{% static 'activities/js/notifications.js' %}"></script>
+  <script src="{{ STATIC_URL }}{% static 'messages/js/check_messages.js' %}"></script>
+{% endblock body %}
+<!--jQuery [ REQUIRED ]-->
+
+
+<!--Fast Click [ OPTIONAL ]-->
+<script src="{{ STATIC_URL }}{% static 'plugins/fast-click/fastclick.min.js' %}"></script>
+
+
+<!-- Nifty Admin [ RECOMMENDED ]
+<script src="{{ STATIC_URL }}{% static 'js/nifty.min.js' %}"></script> -->
+
+
+<!--Switchery [ OPTIONAL ]-->
+<script src="{{ STATIC_URL }}{% static 'plugins/switchery/switchery.min.js' %}"></script>
+
+
+<!--Bootstrap Select [ OPTIONAL ]-->
+<script src="{{ STATIC_URL }}{% static 'plugins/bootstrap-select/bootstrap-select.min.js' %}"></script>
+<script src="{{ STATIC_URL }}{% static 'js/app.js' %}"></script>
+<script src="{{ STATIC_URL }}{% static 'js/jquery.Jcrop.min.js' %}"></script>
+  <script src="{{ STATIC_URL }}{% static 'core/js/picture.js' %}"></script>
+<script>
+function init() {
+var imgDefer = document.getElementsByTagName('img');
+for (var i=0; i<imgDefer.length; i++) {
+if(imgDefer[i].getAttribute('data-src')) {
+imgDefer[i].setAttribute('src',imgDefer[i].getAttribute('data-src'));
+} } }
+window.onload = init;
+</script>
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.5&appId=1686173174962992";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+  
+</body>
+</html>

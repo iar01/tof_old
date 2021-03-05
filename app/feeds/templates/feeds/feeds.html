@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load staticfiles i18n competitions_extras %}
+
+
+{% block head %}
+  <meta property="fb:app_id"        content="1686173174962992"/>
+    <meta property="og:type"          content="article" />
+	<meta property="og:title"         content="Please vote for me" />
+    <meta property="og:image" content="{{ STATIC_URL }}{% static 'img/Capture.png' %}" />
+	<meta property="og:description"   content="Please Vote for me" />
+  <script src="{{ STATIC_URL }}{% static 'js/canvas-to-blob.min.js' %}"></script>
+  <script src="{{ STATIC_URL }}{% static 'js/jquery.iframe-transport.js' %}"></script>
+  <script src="{{ STATIC_URL }}{% static 'js/jquery.ui.widget.js' %}"></script>
+  <script src="{{ STATIC_URL }}{% static 'js/load-image.min.js' %}"></script>
+
+  <link href="{{ STATIC_URL }}{% static 'feeds/css/feeds.css' %}" rel="stylesheet">
+  <script src="{{ STATIC_URL }}{% static 'js/jquery.bullseye-1.0-min.js' %}"></script>
+  <script src="{{ STATIC_URL }}{% static 'feeds/js/feeds.js' %}"></script>
+   <style>
+.demo-card-event.mdl-card {
+  width: 100%;
+  height: 10px;
+  text-align: center;
+  background: #3E4EB8;
+}
+.demo-card-event > .mdl-card__actions {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.demo-card-event > .mdl-card__title {
+  align-items: flex-start;
+  text-align: center;
+}
+.demo-card-event > .mdl-card__title > h5 {
+  margin: auto;
+  
+}
+.demo-card-event > .mdl-card__title > p {
+  margin: auto;
+  color: #fff;
+}
+
+.demo-card-event > .mdl-card__actions {
+  display: flex;
+  box-sizing:border-box;
+  align-items: center;
+}
+.demo-card-event > .mdl-card__actions > .material-icons {
+  padding-right: 10px;
+}
+.demo-card-event > .mdl-card__title,
+.demo-card-event > .mdl-card__actions,
+.demo-card-event > .mdl-card__actions > .mdl-button {
+  color: #fff;
+}
+</style>
+{% endblock head %}
+
+{% block main %}
+    <!--
+<div class="demo-card-event mdl-card mdl-shadow--2dp">
+  <div class="mdl-card__title mdl-card--expand">
+    <p>
+      <br>
+      <u>Featured event</u>  <br>Fashion Photography
+      <br>
+      <br>
+      Check competition tab in sidebar, for more events.
+    </p>
+    
+  </div>
+  <div class="mdl-card__actions mdl-card--border">
+    <a href = "/competitions/competition/4/"class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+      Participate
+    </a>
+    <div class="mdl-layout-spacer"></div>
+    <i class="material-icons">event</i>
+  </div>
+</div>
+-->
+
+
+
+<!-- <div class="alert alert-danger media fade in text-center">
+												<h4 class="text-thin"><b><a style = "color:#FFF" href = "/competitions/competition/3/">Nature Photography Competition</a></b> is live now.</h4>
+<u><a style = "color:#FFF;font-size:1.2em" href = "/competitions/competition/3/">Participate here</a></u> or check out more events under competition's tab on left side bar!</br>Mail your questions at contact@theonlinefest.com
+											</div>   -->
+
+    
+ 
+
+
+<div class="demo-cards mdl-grid">
+  
+    <div class="stream-update">
+      <a href="#"><span class="new-posts"></span> {% trans 'new posts' %}</a>
+    </div>
+    
+    
+    <ul class="stream mdl-grid mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+      {% for feed in feeds %}
+      {% is_user_can_like feed=feed user=user as can_take_like %}
+      <div class="demo-updates mdl-cell--top mdl-card mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--6-col-desktop">
+        {% include 'feeds/partial_feed.html' with feed=feed %}
+      </div>
+          <div id="remove-{{ feed.pk }}" class="modal">
+            <div class="modal-content">
+              <h4>Delete feed</h4>
+              <p>Do you want to delete this feed?</p>
+            </div>
+            <div class="modal-footer">
+              <a href="#!" data-remove="{{ feed.pk }}" class="remove-feed modal-action modal-close waves-effect waves-red btn-flat ">Delete</a>
+              <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+            </div>
+          </div>
+      {% endfor %}
+    </ul>
+
+    <div class="load">
+      <img src="{{ STATIC_URL }}{% static 'img/loading.gif' %}">
+    </div>
+    <form method="get" action="{% url 'load' %}" id="load_feed" autocomplete="off">
+      <input type="hidden" name="feed_source" id="feed_source" value="all">
+      <input type="hidden" name="from_feed" value="{{ from_feed }}">
+      <input type="hidden" name="page" value="{{ page }}">
+    </form>
+
+
+  
+  </div>
+ 
+  
+{% endblock main %}

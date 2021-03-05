@@ -1,0 +1,461 @@
+﻿{% extends 'base.html' %}
+{% load staticfiles i18n competitions_extras %}
+
+{% block head %}
+	<meta property="fb:app_id"        content="1686173174962992"/>
+    <meta property="og:type"          content="article" />
+	<meta property="og:title"         content="Please vote for me" />
+    <meta property="og:image" content="{{ STATIC_URL }}{% static 'img/Capture.png' %}" />
+	<meta property="og:description"   content="Please Vote for me" />
+ 
+    
+  <link href="{{ STATIC_URL }}{% static 'competitions/css/competitions.css' %}" rel="stylesheet">
+  <link href="{{ STATIC_URL }}{% static 'feeds/css/feeds.css' %}" rel="stylesheet">
+  <script src="{{ STATIC_URL }}{% static 'feeds/js/feeds.js' %}"></script>
+  <script src="{{ STATIC_URL }}{% static 'competitions/js/competitions.js' %}"></script>
+    <link rel="import" href="{{ STATIC_URL }}{% static 'bower_components/iron-flex-layout/iron-flex-layout.html' %}">
+    
+    <link rel="import" href="{{ STATIC_URL }}{% static 'bower_components/paper-styles/color.html' %}">
+ <link rel="import" href="{{ STATIC_URL }}{% static 'bower_components/paper-dialog/paper-dialog.html' %}">
+  <link rel="import" href="{{ STATIC_URL }}{% static 'bower_components/paper-fab/paper-fab.html' %}">
+ <link rel="import" href="{{ STATIC_URL }}{% static 'bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html' %}">
+
+  <style is="custom-style">
+    paper-scroll-header-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding:inherit;
+      background-color: var(--paper-grey-200, #eee);
+    }
+  
+    paper-toolbar .title {
+      margin-left: 60px;
+    }
+    .content {
+      padding: 8px;
+    }
+    .spacer {
+      @apply(--layout-flex);
+    }
+  </style>
+  <style is="custom-style" include="demo-pages-shared-styles">
+    paper-fab {
+      margin-left: 5px;
+      margin-right: 5px;
+    
+       display: inline-block;
+    }
+    paper-fab.add {
+     width:70px;
+     height:70px;
+    }
+     paper-fab.blue {
+            --paper-fab-background: var(--paper-light-blue-500);
+            --paper-fab-keyboard-focus-background: var(--paper-light-blue-900);
+          }
+          paper-fab.orange {
+            --paper-fab-background: var(--paper-orange-500);
+            --paper-fab-keyboard-focus-background: var(--paper-orange-900);
+          }
+          paper-fab.indigo{
+              --paper-fab-background:#3f51b5;
+          }
+  
+  </style>
+{% endblock head %}
+
+{% block sidebar %}
+
+<div >
+{% include 'competitions/partial_ranking_sidebar.html' with competition=competition %}
+</div>
+
+ {% endblock sidebar %}   
+{% block title2 %}
+ {% endblock title2 %}
+
+{% block main %}
+
+
+<section onclick="clickHandler(event)">
+
+
+         <div class="row competitions-btns">
+          <a class="modal-trigger waves-effect waves-light " href="#about_competition"><i class="material-icons">info</i><span class='hide-on-small-only'>About</span></a>
+          <a class="modal-trigger waves-effect waves-light " href="#scoring_criteria"><i class="material-icons">assessment</i></i><span class='hide-on-small-only'>Scoring</span></a>
+          <a class="modal-trigger waves-effect waves-light " href="#rulez"><i class="material-icons">toc</i><span class='hide-on-small-only'>Rules</span></a>
+          <a class="modal-trigger waves-effect waves-light " href="#judge_about"><i class="material-icons">school</i><span class='hide-on-small-only'>Judge</span></a>
+
+          {% is_user_can_take_part competition=competition user=user as can_take_part %}
+
+          {% if can_take_part.can_post %}
+            <a id="takepart" class="participate-btn btn-compose modal-trigger waves-effect waves-light " href="#dialog"><i class="material-icons"style="color:red">pages</i><span class='hide-on-small-only'>Participate</span></a>
+
+          {% else %}
+
+            <a style="color:rgba(0,0,0,0.5);"class="participate-btn modal-trigger waves-effect waves-light " href="#part"><i class="material-icons"style="color:red">pages</i><span class='hide-on-small-only'>Participate</span></a>
+          {% endif %}
+
+        </div>
+          <div class="competitions-btns_help-text">
+            <div class="hide-on-med-and-up">About</div>
+            <div class="hide-on-med-and-up">Scoring</div>
+            <div class="hide-on-med-and-up">Rules</div>
+            <div class="hide-on-med-and-up">Judge</div>
+            <div class="hide-on-med-and-up">Participate</div>
+          </div>
+        <div id="about_competition" class="modal modal-fixed-footer">
+          <div class="modal-content" style="text-align: center;">
+            <h4>About the competition</h4>
+            <p>Title: {{ competition.title }} </p>
+            <p>Theme: {{ competition.theme }} </p>
+            <p style="white-space:pre-line;"> Prize: {{ competition.cash_prize }} </p>
+            <p>Judge: {{ competition.judge }}</p>
+            <hr>
+            <p>Competition Start Date: {{ competition.start_date}}</p>
+            <p>Entries can be uploaded by: {{ competition.finish_upload_date }}</p>
+            <p>Result will be declared on: {{ competition.finish_date }}</p>
+          </div>
+          <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
+          </div>
+        </div>
+        <div id="scoring_criteria" style="text-align: center;" class="modal modal-fixed-footer">
+          <div class="modal-content">
+            <h4>Scoring criteria</h4>
+            <p style="white-space:pre-line;"> {{ competition.scoring_criteria|safe }} </p>
+          </div>
+          <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
+          </div>
+        </div>
+        <div id="rulez" style="text-align: center;" class="modal modal-fixed-footer">
+          <div class="modal-content">
+            <h4>Rules</h4>
+            <p style="white-space:pre-line;"> {{ competition.rulez|safe }}</p>
+          </div>
+          <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
+          </div>
+        </div>
+        <div id="judge_about" style="text-align: center;" class="modal modal-fixed-footer">
+          <div class="modal-content">
+            <h4>Judge</h4>
+            <p style="white-space:pre-line;"> {{ competition.judge_about|safe }} </p>
+          </div>
+          <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
+          </div>
+        </div>
+
+        <div id="part" style="text-align: center;" class="modal">
+          <div class="modal-content">
+            <h5>Preserve this one for the next Competition!</h5>
+            <p>You can neither post multiple entries nor post an entry in a past event. In case you want to change your entry , then delete the previous one first! Good Luck! </p>
+          </div>
+          <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
+          </div>
+        </div>
+
+        <div id="dialog" class="modal modal-fixed-footer">
+          <div class="modal-content compose">
+            <h2>{% trans "Add your entry" %}</h2>
+
+            <form role="form" method="post" action="{% url 'competitions:add_entry' competition_id=competition.id %}"
+                  id="entry-form" data-type="{{ competition.type }}">
+              {% csrf_token %}
+              <div class="form-group">
+                <textarea class="form-control" rows="1" name="post" placeholder="Enter Caption"></textarea>
+              </div>
+              {% if competition.type == 'img' %}
+                <input type="hidden" name="image"style="margin:10px">
+                <div id="direct_upload">
+                  <button  id="btn-upload" type="button" class="btn " title="Upload"
+                          style="display: none;">{% trans 'Upload' %}</button>
+                  <span class="status_value"></span>
+                  <button type="button" class="btn-filechose btn  pull-right" title="Upload">
+                    <input class="fileupload" type="file" name="files">
+                  </button>
+                  <div class="imagepreview" style="display: none;">
+                    <img src="" width="50%" height="50%"style="padding: 5px 0;"/>
+                  </div>
+                </div>
+                {% elif competition.type == 'vid' %}
+                <input type="hidden" name="video_url">
+                <div id="video_upload">
+                  <button id="btn-video-upload" type="button" class="btn btn-primary" title="Upload"
+                          style="display: none;">{% trans 'Upload' %}</button>
+                  <span class="status_value"></span>
+                  <button type="button" class="btn-filechose btn btn-primary pull-right" title="Upload">
+                    <input class="fileupload" type="file" name="files">
+                  </button>
+                  <div align="center" class="videopreview embed-responsive embed-responsive-16by9" style="display: none;">
+                    <video width="100%" controls="controls">
+                    </video>
+                  </div>
+                </div>
+              {% endif %}
+              <div style="margin:10px; text-allign:center">
+             <p>
+          <input type="checkbox" class="filled-in" id="terms_input" checked="checked" />
+          <label for="terms_input"><a class="modal-trigger" href="#Terms_Conditions">Accept Terms & Conditions + Rules</a></label>
+        </p>
+        <div id="Terms_Conditions" class="modal modal-fixed-footer">
+        <div class="modal-content">
+          <h4 class="center-align">Rules and Terms of use.</h4>
+          <hr>
+          {% include "feeds/rules_ToU.html" %}
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
+        </div>
+      </div>
+       
+
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-post">
+                  <span class="glyphicon glyphicon-send"></span> {% trans 'Post' %}
+                </button>
+              </div>
+</div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
+          </div>
+        </div>
+
+
+          <div class="mar-top-clearfix">
+
+          <!--  <button type="button" class="btn btn-primary pull-right btn-compose">
+              <span class="glyphicon glyphicon-share-alt"></span> {% trans 'Take part' %}
+            </button>
+          </div>
+          -->
+       <!-- <paper-button raised data-dialog="dialog" class ="btn-compose"><iron-icon icon="file-upload"></iron-icon>Take Part</paper-button>
+         -->
+<!--
+    <paper-dialog id="dialog">
+        <paper-dialog-scrollable>
+    <div>
+      <h2>{% trans "Add your entry" %}</h2>
+
+      <form role="form" method="post" action="{% url 'competitions:add_entry' competition_id=competition.id %}"
+            id="entry-form" data-type="{{ competition.type }}">
+        {% csrf_token %}
+        <div class="form-group">
+          <textarea class="form-control" rows="1" name="post" placeholder="Enter Caption"></textarea>
+        </div>
+        {% if competition.type == 'img' %}
+          <input type="hidden" name="image">
+          <div id="direct_upload">
+            <button id="btn-upload" type="button" class="btn btn-primary" title="Upload"
+                    style="display: none;">{% trans 'Upload' %}</button>
+            <span class="status_value"></span>
+            <button type="button" class="btn-filechose btn btn-primary pull-right" title="Upload">
+              <input class="fileupload" type="file" name="files">
+            </button>
+            <div class="imagepreview" style="display: none;">
+              <img src="" width="50%" height="50%"style="padding: 5px 0;"/>
+            </div>
+          </div>
+          {% elif competition.type == 'vid' %}
+          <input type="hidden" name="video_url">
+          <div id="video_upload">
+            <button id="btn-video-upload" type="button" class="btn btn-primary" title="Upload"
+                    style="display: none;">{% trans 'Upload' %}</button>
+            <span class="status_value"></span>
+            <button type="button" class="btn-filechose btn btn-primary pull-right" title="Upload">
+              <input class="fileupload" type="file" name="files">
+            </button>
+            <div align="center" class="videopreview embed-responsive embed-responsive-16by9" style="display: none;">
+              <video width="100%" controls="controls">
+              </video>
+            </div>
+          </div>
+        {% endif %}
+
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-post">
+            <span class="glyphicon glyphicon-send"></span> {% trans 'Post' %}
+          </button>
+          <button type="button" class="btn btn-default btn-cancel-compose">{% trans 'Cancel' %}</button>
+        </div>
+
+      </form>
+    </div>
+        </paper-dialog-scrollable>
+        </paper-dialog>
+  </div>
+-->
+
+
+
+
+
+
+ 
+  <div class="row">
+
+    <div>
+
+      <ul class="stream mdl-grid mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+
+        {% for feed in competition.feed_set.all %}
+          {% is_user_can_like feed=feed user=user as can_take_like %}
+          <div class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--6-col-desktop">
+            {% include 'feeds/partial_feed.html' with feed=feed %}
+          </div>
+          <div id="remove-{{ feed.pk }}" class="modal" style="z-index:500">
+            <div class="modal-content">
+              <h4>Delete</h4>
+              <p>This will remove your participating entry,do you want to proceed? <br>(press escape/back key to cancel)</p>
+            </div>
+            <div class="modal-footer" style="text-allign:center;margin-right:20px;float:left">
+              <a href="#!" data-remove="{{ feed.pk }}" class="remove-feed modal-action modal-close waves-effect waves-red btn-flat ">Yes</a>
+                   </div>
+          </div>
+        {% endfor %}
+      </ul>
+
+    </div>
+
+  </div>
+
+<!--   </div>
+-->
+
+<!--
+ <paper-dialog id="about121">
+        <paper-dialog-scrollable>
+     <div class="panel">
+                                                        <div class="panel-heading text-center">
+                                                            <h3 class="panel-title">About the competition</h3>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <p style="margin:auto">
+                                                            •	<b>{{competition.title}}</br>
+                    •	<b>Theme</b>: Nature Photography</br></br>
+                    • <b>Cash Prize ($150 USD)</b> : 1st- $105 USD | 2nd - $45 USD</br></br>
+                    •	<b>Judge</b> : Patrick Schmetzer</br></br>
+                    •	<b>Competition Start Date</b> : January 18 2016 , 00:01 IST</br>
+                    •	<b>Entries can be uploaded by</b> : January 26 2016 , 23:59 IST</br>
+                    •	<b>Result will be declared on</b> : January 30 2016 , 18:00 IST</br>
+
+
+
+                    </p>
+
+									</div>
+								</div>
+ </paper-dialog>
+ <paper-dialog id="score-di">
+    		<div class="panel">
+									<div class="panel-heading text-center">
+										<h3 class="panel-title">How to increase your rank </h3>
+									</div>
+									<div class="panel-body text-center" style="max-width:350px">
+										<p>1. Each Like from audience at theonlinefest.com on your entry is worth <b>30 points</b>.</br> Encourage your friends to create account to vote for you to increase your chances of winning</br></br>2. Share on Facebook: <b>10 points</b> for every reshare of your post
+                                        </br>3. This accounts for 40% of the total score, rest 60% will be awarded by the judge</br> </br>
+                                        4. Ranking chart only depicts rank based on likes, final rankings may differ</p>
+									</div>
+								</div>
+        </paper-dialog-scrollable>
+ </paper-dialog>
+ <paper-dialog id="conditions">
+        <paper-dialog-scrollable>
+<div class="panel">
+									<div class="panel-heading text-center">
+										<h3 class="panel-title">Rules for Naturally Speaking:</h3>
+									</div>
+									<div class="panel-body">
+										<p><b>Judgement Criteria:</b></br></br>
+
+Photos will be judged on two criteria’s :</br>
+I.	<b>Judge’s Score (60% weight-age):</b> This will be based on (but not limited to) originality, technical excellence, composition, overall impact, artistic merit, subject matter relevance to Nature, adherence to rules.  </br>
+II.	<b>People’s Choice (40% weight-age):</b> This will be determined based on the popularity i.e which of the honorable entries receives the most votes (likes) on our website combined with number of shares on facebook.</br></br>
+<b>Rules</b></br>
+                                            1.	The Photo Contest begins at 00:01 IST on Jan 18, 2016 and ends at 23:59 IST on Jan 26, 2016 (the “Entry Period”). Entries submitted before or after the Entry Period will not be eligible. Organizer’s server time is the official time-keeping device for the Photo Contest.</br></br>
+2.	Photos that have been digitally altered beyond standard optimization (removal of dust, cropping, reasonable adjustments to exposure, color and contrast, etc.) will be disqualified.</br>
+3.	Size and pixel is no bar but a high quality image is recommended.</br></br>
+4.	Each user can submit only one entry.</br></br>
+5.	Theme : Nature with Natural Light</br></br>
+6.	People or Macros of any sort like flowers, insects etc are not allowed.</br></br>
+7.	Flash/external artificial Lighting of any sort is not allowed.</br></br>
+8.	Entries may originate in any format — including, but not limited to digital files, digital prints, color transparencies, color prints, or black and white prints — so long as they are submitted electronically in a .jpeg, .jpg or .gif format. Multiple exposures that have been combined to produce a single "High Dynamic Range" image are acceptable.</br></br>
+</p>
+									</div>
+								</div>
+        </paper-dialog-scrollable>
+ </paper-dialog>
+ <paper-dialog id="judge-di">
+        <paper-dialog-scrollable>
+
+  <div class="panel">
+									<div class="panel-heading text-center">
+										<h3 class="panel-title">Judge</h3>
+
+
+									</div>
+									<div class="panel-body text-center" style="max-width:350px">
+                                    <paper-card  image="{{ STATIC_URL }}{% static 'img/er.jpg' %}">
+<h3 class="thin-text">Patrick Schmetzer</h3>
+  <a href="//www.patrickschmetzer.de">www.patrickschmetzer.de</a></br>
+<i class="fa fa-instagram fa-2x"></i>    @patrickschmetzer </p>
+</paper-card>
+
+
+
+                                        <p>Patrick is a professional photographer based in frankfurt, germany , specialised in nature and wildlife photography. Starting out with just passion, a cellphone and a dream, his passion and picture style soon became something unique making waves on the world wide web. </br></br>
+His photography style is a mixture of colorful and surreal elements that make the observer feel like in a fantasy world while still preserving the photographic elements. </br></br>
+When asked about his goals he said,” My goal is to emotionally move people while looking at my work. I want them to look at my picture with a different perspective, like they are looking at an artwork in a gallery”.</br></br></p>
+									</div>
+								</div>
+        </paper-dialog-scrollable>
+ </paper-dialog>
+ <paper-dialog id="part">
+-->
+
+
+								<!--Panel with Header-->
+								<!--===================================================-->
+<!--  								<div class="panel">
+									<div class="panel-heading text-center">
+										<h3 class="panel-title">Sorry !</h3>
+									</div>
+									<div class="panel-body">
+										<p>{{can_take_part.message}}</p>
+									</div>
+								</div>
+-->
+								<!--===================================================-->
+								<!--End Panel with Header-->
+
+
+<!--
+ </paper-dialog>
+-->
+  </section >
+ <script>
+    function clickHandler(e) {
+      var button = e.target;
+      while (!button.hasAttribute('data-dialog') && button !== document.body) {
+        button = button.parentElement;
+      }
+      if (!button.hasAttribute('data-dialog')) {
+        return;
+      }
+      var id = button.getAttribute('data-dialog');
+      var dialog = document.getElementById(id);
+      if (dialog) {
+        dialog.open();
+      }
+    }
+  </script>
+{% endblock main %}

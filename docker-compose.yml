@@ -1,0 +1,22 @@
+postgres:
+  image: postgres:9.4
+  ports:
+    - "5432:5432"
+
+web:
+  restart: always
+  build: ./app
+  expose:
+    - "8000"
+  ports:
+    - "8000:8000"
+  links:
+    - postgres:postgres
+  environment:
+    DB_NAME: postgres
+    DB_USER: postgres
+    DB_PASS: postgres
+  volumes:
+    - ./app:/usr/src/app
+    - ./data/public:/usr/src/public
+  command: python manage.py runserver 0.0.0.0:8000

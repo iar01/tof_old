@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load staticfiles i18n %}
+
+    {% block head %}
+  <link href="{{ STATIC_URL }}{% static 'competitions/css/styles.css' %}" rel="stylesheet">   
+ 
+    <style>
+       #pointer
+       {cursor: pointer;}
+
+         @media only screen and (max-width: 601px) {
+     #hideCol{ 
+     
+      display: none;
+     
+      
+     }
+     #fontSize1
+     {font-size: 16px;
+      text-align: center;   
+     }
+      #fontSize2
+     {font-size: 14px;
+      text-align: center;   
+     }
+       
+         }
+ </style>
+ 
+    {% endblock head %}
+{% block main %}
+        <table class="mdl-data-table mdl-js-data-table ">
+          <thead>
+            <tr>
+              <th class="mdl-data-table__cell--non-numeric" id="fontSize1">Competition</th>
+              <th class="mdl-data-table__cell--non-numeric" id="hideCol" >Category</th>
+              <th class="mdl-data-table__cell--non-numeric" id="hideCol" >Result Date</th>
+              <th class="mdl-data-table __cell--non-numeric" id = "hidecol">Judge</th>
+            </tr>
+          </thead>
+          <tbody>
+    {% for competition in competitions %}
+            {% if competition.is_result_declaration_date %}
+                <tr class="modal-trigger" id="pointer" " href="#comp-{{ competition.id }}">
+                    <td class="mdl-data-table__cell--non-numeric"id="fontSize2">{{ competition.title }}</td>
+                    <td class="mdl-data-table__cell--non-numeric" id="hideCol">{{ competition.category }}</td>
+                    <td class="mdl-data-table__cell--non-numeric"id="hideCol">{{ competition.result_declaration_date }}</td>
+                    <td class="mdl-data-table__cell--non-numerict"id="hideCol">{{ competition.judge }}</td>
+                </tr>
+
+                <div id="comp-{{ competition.id }}" class="modal mdl-card--border">
+                    <div class="modal-content center-align">
+                        <h4>{{ competition.title }}<p>({{ competition.start_date }} - {{ competition.finish_date }})</p></h4>
+
+                        <div class="col s2">
+                          <img src="{{ competition.competition_result.winner_feed.feed.user.profile.get_picture }}" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
+                        </div>
+
+
+                         <p><B><H5>Winner : {{ competition.competition_result.winner_feed.feed.user.first_name }}</H5></B>
+
+                         <b><hr style="margin-left: 10%;margin-right: 10%    "class="center-align"></b>
+
+                     <div class="row">
+                          <div class="col m2 s3">
+                                    <img src="{{ competition.competition_result.winner_feed.feed.user.profile.get_picture }}"class="circle"
+                                         style="height:auto;max-width:100%;">
+                                </div>
+                                <div class="col m5 s5">
+                                    <p>{{ competition.competition_result.winner_feed.feed.user.first_name }}</p>
+                                </div>
+
+                                <div class=" col m5 s4 right-align small mdl-card__supporting-text" >
+                                    <p style="font-size:2em">Audience:{{competition.competition_result.winner_feed.audience_points}}<br>
+                                    Judge : {{competition.competition_result.winner_feed.judges_points}}<br>
+                                        <b>Total : {{competition.competition_result.winner_feed.total_points}}</b>
+                                    </p>
+                                </div>
+                             </div>
+
+                         {% for feed_dict in competition.competition_result.feed_dict_list%}
+                             <hr style="margin-left: 30%;margin-right: 30%    "class="center-align">
+                             <div class="row">
+
+                                <div class="col m2 s3">
+                                    <img src="{{ feed_dict.feed.user.profile.get_picture }}"class="circle"
+                                         style="height:auto;max-width:100%;">
+                                </div>
+
+                                <div class="col m5 s5">
+                                    <p>{{ feed_dict.feed.user.first_name }}</p>
+                                </div>
+
+                                <div class=" col m5 s4 right-align small mdl-card__supporting-text" >
+                                    <p style="font-size:2em">Audience:{{feed_dict.audience_points}}<br>
+                                    Judge : {{feed_dict.judges_points}}<br>
+                                        <b>Total : {{feed_dict.total_points}}</b>
+                                    </p>
+                                </div>
+                             </div>
+                        {% endfor %}
+
+
+
+
+                    <div class="modal-footer">
+                      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                    </div>
+
+            {% endif %}
+    {% endfor %}
+          </tbody>
+        </table>
+
+{% endblock main %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load staticfiles i18n %}
+
+{% block title %}Competitions{% endblock %}
+
+{% block head %}
+  <link href="{{ STATIC_URL }}{% static 'competitions/css/competitions.css' %}" rel="stylesheet">
+  <script src="{{ STATIC_URL }}{% static 'competitions/js/competitions.js' %}"></script>
+  
+  
+  
+  <style>
+    .hover-effect:hover {    -moz-box-shadow: 0 0 40px #ccc;
+		-webkit-box-shadow: 0 0 30px #ccc;
+		box-shadow: 0 0 80px #ccc;}
+   
+    </style>
+  
+{% endblock head %}
+
+{% block main %}
+  <!--<div class="page-header">
+    <h1 class="text-bold text-center">{% trans "Choose any Category" %}</h1>
+  </div>
+  -->
+  <div class="row categories" >
+    {% for category in categories %}
+      {% include 'competitions/partial_category.html' with category=category %}
+    {% empty %}
+      <h4 class="no-data">{% trans "No competitions to display" %}</h4>
+    {% endfor %}
+  </div>
+{% endblock main %}

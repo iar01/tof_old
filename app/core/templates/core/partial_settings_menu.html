@@ -1,0 +1,6 @@
+{% load i18n %}
+<div class="collection">
+  <a href="{% url 'settings' %}" class="collection-item{% if active == 'profile' %} active{% endif %}">{% trans 'Profile' %}</a>
+  <a href="{% url 'picture' %}" class="collection-item{% if active == 'picture' %} active{% endif %}">{% trans 'Picture' %}</a>
+  <a href="{% url 'password' %}" class="collection-item{% if active == 'password' %} active{% endif %}">{% trans 'Password' %}</a>
+</div>

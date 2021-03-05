@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load i18n staticfiles %}
+
+{% block title %}{{ page_user.profile.get_screen_name }}{% endblock %}
+
+{% block head %}
+  <link href="{{ STATIC_URL }}{% static 'core/css/profile.css' %}" rel="stylesheet">
+  <link href="{{ STATIC_URL }}{% static 'feeds/css/feeds.css' %}" rel="stylesheet">
+  <script src="{{ STATIC_URL }}{% static 'js/jquery.bullseye-1.0-min.js' %}"></script>
+  <script src="{{ STATIC_URL }}{% static 'feeds/js/feeds.js' %}"></script>
+
+{% endblock head %}
+
+{% block main %}
+  <div class="page-header">
+    <h1>{{ page_user.profile.get_screen_name }} {% if page_user.get_full_name %}<small>({{ page_user.username }})</small>{% endif %}</h1>
+  </div>
+  <div class="profile">
+    <div class="row">
+      <div class="col-md-3 user-profile">
+        <img src="{{ page_user.profile.get_picture }}" class="picture">
+        <ul>
+          {% if page_user.profile.job_title %}
+          <li><span class="glyphicon glyphicon-briefcase"></span> {{ page_user.profile.job_title }}</li>
+          {% endif %}
+          {% if page_user.profile.location %}
+          <li><span class="glyphicon glyphicon-map-marker"></span> {{ page_user.profile.location }}</li>
+          {% endif %}
+          {% if page_user.email %}
+          <li><span class="glyphicon glyphicon-envelope"></span> {{ page_user.email }}</li>
+          {% endif %}
+          {% if page_user.profile.url %}
+          <li><span class="glyphicon glyphicon-globe"></span> <a href="{{ page_user.profile.get_url }}" target="_blank">{{ page_user.profile.get_url }}</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    <div id="aside-container" class="profile">
+				<div id="aside">
+					<div class="nano">
+						<div class="nano-content">
+
+							<!-- Simple profile -->
+							<div class="text-center pad-all">
+								<div class="pad-ver">
+									<img src="{{ page_user.profile.get_picture }}" class="img-lg img-border img-circle" alt="Profile Picture">
+								</div>
+								<h4 class="text-lg text-overflow mar-no">{{ page_user.username }}</h4>
+                                {% if page_user.profile.job_title %}
+          <p class="text-sm"> {{ page_user.profile.job_title }}</p>
+          {% endif %}
+
+
+
+								<div class="pad-ver btn-group">
+									<a title="" href="#" class="btn btn-icon btn-hover-primary fa fa-facebook icon-lg add-tooltip" data-original-title="Facebook" data-container="body"></a>
+									<a title="" href="#" class="btn btn-icon btn-hover-info fa fa-twitter icon-lg add-tooltip" data-original-title="Twitter" data-container="body"></a>
+									<a title="" href="#" class="btn btn-icon btn-hover-danger fa fa-google-plus icon-lg add-tooltip" data-original-title="Google+" data-container="body"></a>
+									<a title="" href="#" class="btn btn-icon btn-hover-mint fa fa-envelope icon-lg add-tooltip" data-original-title="Email" data-container="body"></a>
+								</div>
+								<button class="btn btn-block btn-success">Follow</button>
+							</div>
+							<hr>
+							<ul class="list-group bg-trans">
+
+								<!-- Profile Details -->
+                                {% if page_user.profile.location %}
+                                <li class="list-group-item list-item-sm"><i class="fa fa-home fa-fw"></i>
+                                 {{ page_user.profile.location }}</li>
+                                {% endif %}
+
+								{% if page_user.email %}
+                                <li class="list-group-item list-item-sm">
+									<i class="fa fa-clock-o fa-fw"></i> {{ page_user.email }}
+								</li>
+                            {% endif %}
+								{% if page_user.profile.url %}
+                                <li class="list-group-item list-item-sm text-primary text-semibold">
+									<a href="#" class="btn-link">
+										<i class="fa fa-globe fa-fw"></i> {{ page_user.profile.url }}
+									</a>
+								</li>
+                            {% endif %}
+							</ul>
+							<hr>
+							<div class="pad-hor">
+								<h5>About Me</h5>
+								<small class="text-thin">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</small>
+							</div>
+							<hr>
+							<div class="text-center clearfix">
+								<div class="col-xs-6">
+									<p class="h3">523</p>
+									<small class="text-muted">Likes</small>
+								</div>
+								<div class="col-xs-6">
+									<p class="h3">7,345</p>
+									<small class="text-muted">Friends</small>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+    <!-- ********************************************feed -->
+      <div class="col-md-9">
+        <h4>{% trans 'Last Feeds by' %} {{ page_user.profile.get_screen_name }}</h4>
+        <div class="stream-update">
+          <a href="#"><span class="new-posts"></span> new posts</a>
+        </div>
+        <ul class="stream">
+          {% for feed in feeds %}
+            {% include 'feeds/partial_feed.html' with feed=feed %}
+          {% endfor %}
+        </ul>
+        <div class="load">
+          <img src="{{ STATIC_URL }}{% static 'img/loading.gif' %}">
+        </div>
+        <form method="get" action="{% url 'load' %}" id="load_feed" autocomplete="off">
+          <input type="hidden" name="feed_source" id="feed_source" value="{{ page_user.pk }}">
+          <input type="hidden" name="from_feed" value="{{ from_feed }}">
+          <input type="hidden" name="page" value="{{ page }}">
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock main %}

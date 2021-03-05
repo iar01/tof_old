@@ -1,0 +1,34 @@
+[
+{
+    "model": "competitions.category",
+    "pk": 1,
+    "fields": {
+        "title": "Music"
+    }
+},
+{
+    "model": "competitions.category",
+    "pk": 2,
+    "fields": {
+        "title": "Photos"
+    }
+},
+{
+    "model": "competitions.category",
+    "pk": 3,
+    "fields": {
+        "title": "Dance"
+    }
+},
+{
+    "model": "competitions.competition",
+    "pk": 1,
+    "fields": {
+        "title": "Best Photo",
+        "type": "img",
+        "category": 3,
+        "start_date": "2016-01-16",
+        "finish_date": "2016-01-16"
+    }
+}
+]

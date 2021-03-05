@@ -1,0 +1,21 @@
+{
+  "name": "MomTray",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-rigger": "^0.5.8",
+    "gulp-sass": "^2.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^2.2.0",
+    "material-design-lite": "^1.0.6",
+    "material-modal": "^0.1.2"
+  }
+}

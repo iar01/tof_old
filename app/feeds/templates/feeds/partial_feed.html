@@ -1,0 +1,238 @@
+{% load i18n %}
+{% load humanize competitions_extras %}
+{% block head %}
+<style is="custom-style">
+    body {
+      background-color: var(--paper-light-blue-700);
+    }
+    #cards {
+      @apply(--layout-vertical);
+      @apply(--center-justified);
+      max-width: 100%;
+      margin-left: 30px;
+      margin-right: 30px;
+    }
+    paper-card {
+      width:100%;
+      margin-bottom: 16px;
+      margin-left: 30px;
+      margin-right: 30px;
+
+    }
+    .avatar {
+      display: inline-block;
+      height: 64;
+      width: 64;
+      border-radius: 50%;
+      background: var(--paper-pink-500);
+      color: white;
+      line-height: 64;
+      font-size: 30;
+      text-align: center;
+    }
+    .fancy .title {
+      position: absolute;
+      top: 30px;
+      left: 100px;
+      color: var(--paper-indigo-500);
+    }
+    .fancy img {
+      width: 100%;
+      max-height: 250;
+    }
+    .fancy .big {
+      font-size: 22px;
+      padding: 8px 0 16px;
+      color: var(--google-grey-500);
+    }
+    .fancy .medium {
+      font-size: 16px;
+      padding-bottom: 8px;
+    }
+    .pink {
+      --paper-card-header-color: var(--paper-pink-500);
+    }
+  </style>
+  
+{% endblock head %}
+      {% if feed.image_url %}
+        <div class="mdl-card__title mdl-card--expand mdl-color--grey-100 ">
+       <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="  data-src="{{ feed.image_url }}" alt="" class="responsive-img">
+
+      
+        <!-- <h2 class="mdl-card__title-text">Updates</h2> -->
+
+        </div>
+      {% endif %}
+
+      {% if feed.video_url %}
+        <div class="mdl-card__title mdl-card--expand mdl-color--teal-300"
+        style="padding:0">
+          <video class="responsive-video" controls width="640" height="360">
+            <source src="/media/{{ feed.video_url }}" type="video/mp4">
+          </video>   
+        </div>
+      {% endif %}
+
+      <li feed-id="{{ feed.pk }}" csrf="{{ csrf_token }}" class="post">
+     
+      <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+        <div class="row">
+            <div class="col m2 s3">              
+                <img src="{{ feed.user.profile.get_picture }}" style="height:auto;max-width:100%;">              
+            </div>
+            <div class="col m5 s5">
+                <p>{{ feed.user.first_name }}</p>
+                {% if feed.competition and not competition %}
+                {% endif %}
+                </div>
+            
+            <div class=" col m5 s4 right-align small mdl-card__supporting-text" >
+                <p style="font-size:2em">{{ feed.date|date:"M d, Y" }}</p>
+            </div>
+            <div class ="mdl-card__supporting-text">
+             <p style="font-size:2.3em">{{ feed.linkfy_post|safe }}</p>
+            </div>
+        
+      </div>
+      
+      
+
+      <div class="mdl-card__actions mdl-card--border ">
+          <div style="margin:7px">
+        {% if user in feed.get_likers %}
+            <!-- <a href="#" class="unlike"><span class="material-icons mdl-badge" data-badge="{{ feed.likes }}">thumb_down</span></a> -->
+            <a href="#" style="margin:2px" class="like {% if not can_take_like.can_like %} disabled_like {% endif %}">
+              <span class="text material-icons mdl-badge" data-badge="{{ feed.likes }}">thumb_down</span>
+              <span class="like-count" style="display:none">{{ feed.likes }}</span>
+            </a>
+        {% else %}
+            <!-- <a href="#" class="like"><span class="material-icons mdl-badge" data-badge="{{ feed.likes }}">thumb_up</span></a> -->
+            <a href="#" style="margin:2px" class="like unlike {% if feed in competition.feed_set.all and not can_take_like.can_like %} disabled_like {% endif %} ">
+              <span class="text material-icons mdl-badge" data-badge="{{ feed.likes }}">thumb_up</span>
+              <span class="like-count" style="display:none">{{ feed.likes }}</span>
+            </a>
+        {% endif %}
+        <a style="margin:2px" href="#" class="comment">
+            <span class="comment-count-badge material-icons mdl-badge" data-badge="{{ feed.comments }}">comment</span>
+            <span class="comment-count" style="display:none;">{{ feed.comments }}</span>
+        </a>
+
+        {% if feed.user == user %}
+
+        <a class=" modal-trigger right-align    {% if not can_take_like.can_like %} disabled_like disabled{% endif %}" style = "color: rgba(0, 0, 0, 0.54); font-size: .8em; padding-top: .2em;float: right"href="#remove-{{ feed.pk }}"><i class="material-icons">delete</i></a>
+        <a class="feed_edit_btn   right-align {% if not can_take_like.can_like %} disabled_like disabled {% endif %}"style = "color: rgba(0, 0, 0, 0.54)">
+          <i class=" material-icons">mode_edit</i>
+        </a>
+
+        <div class="feed_edit_form">
+            <form method="POST" class="post-form" action="{% url 'feed_edit' pk=feed.pk %}">
+            {% csrf_token %}
+            <input type="text" name="post" value="{{feed.post}}">
+            <button type="submit" class="save btn btn-default">Save</button>
+          </form>
+        </div>
+  
+        {% endif %}
+        <div class="fb-share-button" 
+             data-href="http://theonlinefest.com/feeds/{{ feed.id }}/"
+             data-layout="button"></div>
+      </div>
+
+      <div class="comments">
+          <form role="form" method="post" action="{{ comment }}" onsubmit="return false">
+            {% csrf_token %}
+            <input type="hidden" name="feed" value="{{ feed.pk }}">
+            <input type="text" class="form-control input-sm" placeholder="{% trans 'Write a comment...' %}" name="post"
+                   maxlength="255">
+          </form>
+          <ol class="clearfix">
+            {% comment %} Place holder to load feed comments {% endcomment %}
+          </ol>
+        </div>
+       </div>
+
+      </li>
+
+
+
+
+
+<!--         <paper-card class="fancy medium" {% if feed.image_url %} image="{{ feed.image_url }}"{% endif %}>
+            <li feed-id="{{ feed.pk }}" csrf="{{ csrf_token }}">
+                 {% if feed.video_url %}
+          <div align="center" class="embed-responsive embed-responsive-16by9">
+            <video width="100%" controls="controls">
+              <source src="/media/{{ feed.video_url }}" type="video/mp4">
+            </video>
+          </div>
+        {% endif %}
+      <div class="card-content">
+        <div class="avatar"><img src="{{ feed.user.profile.get_picture }}"
+                                                            alt=":)" ></div>
+        <div class="title">
+          <div class="medium">{{ feed.user.username }}</div>
+           {% if feed.competition and not competition %}
+          <div class="small">In {{ feed.competition.title }}</div>
+          {% endif %}
+           
+        </div>
+       
+        <small>{{ feed.date|naturaltime }}
+             
+        </small>
+      
+
+    
+    
+       
+        {% if feed.video_url %}
+          <div align="center" class="embed-responsive embed-responsive-16by9">
+            <video width="100%" controls="controls">
+              <source src="/media/{{ feed.video_url }}" type="video/mp4">
+            </video>
+          </div>
+        {% endif %}
+       
+      <div class="card-content post">
+         <div class="medium" style="margin-top:-5; margin-bottom:2">{{ feed.linkfy_post|safe }}</div>
+         <div class="interaction">
+          {% if user in feed.get_likers %}
+            <a href="#" class="like unlike btn btn-sm btn-default btn-hover-mint">
+              <span class="fa fa-thumbs-up"></span>
+              <span class="text">{% trans 'Unlike' %}</span>
+              (<span class="like-count">{{ feed.likes }}</span>)
+            </a>
+          {% else %}
+            <a href="#" class="like btn btn-sm btn-default btn-hover-mint ">
+              <span class="fa fa-thumbs-up"></span>
+              <span class="text">{% trans 'Like' %}</span>
+              (<span class="like-count">{{ feed.likes }}</span>)
+            </a>
+          {% endif %}
+          <a href="#" class="comment btn btn-sm btn-default btn-hover-primary">
+            <span class="glyphicon glyphicon-comment"></span> {% trans 'Comment' %}
+            (<span class="comment-count">{{ feed.comments }}</span>)
+          </a>
+           <div class="fb-share-button" style="margin-top:15px" data-href="http://theonlinefest.com/accounts/login/?next=/feeds/{{ feed.id }}/" data-layout="button_count"></div>
+
+        </div>
+        
+        <div class="comments">
+          <form role="form" method="post" action="{{ comment }}" onsubmit="return false">
+            {% csrf_token %}
+            <input type="hidden" name="feed" value="{{ feed.pk }}">
+            <input type="text" class="form-control input-sm" placeholder="{% trans 'Write a comment...' %}" name="post"
+                   maxlength="255">
+          </form>
+          <ol class="clearfix">
+            {% comment %} Place holder to load feed comments {% endcomment %}
+          </ol>
+        </div>
+         
+             </div>
+      </div>
+            </li>
+    </paper-card> -->
+  
+  

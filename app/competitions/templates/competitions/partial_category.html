@@ -1,0 +1,278 @@
+
+
+    <div class="col m4 s6">
+{% if category.title == 'PHOTOGRAPHY' %}
+  <a style="background-color:rgb(80,199,167) "class="flow-text center-align modalBtns waves-effect waves-light btn modal-trigger" href="#{{ category.title }}-{{ category.id }}">
+   
+{% elif category.title == 'DANCE' %}
+ <a style="background-color:rgb(152,98,145)  "class="flow-text center-align modalBtns waves-effect waves-light btn modal-trigger" href="#{{ category.title }}-{{ category.id }}">
+ 
+{% elif category.title == 'MUSIC' %}
+  <a style="background-color:rgb(247,108,81)  "class="flow-text center-align modalBtns waves-effect waves-light btn modal-trigger" href="#{{ category.title }}-{{ category.id }}">
+ {% elif category.title == 'MOVIES' %}
+  <a style="background-color:rgb(247,108,81)  "class="flow-text center-align modalBtns waves-effect waves-light btn modal-trigger" href="#{{ category.title }}-{{ category.id }}">
+ {% elif category.title == 'PAINTING' %}
+  <a style="background-color:rgb(78,188,218) "class="flow-text center-align modalBtns waves-effect waves-light btn modal-trigger" href="#{{ category.title }}-{{ category.id }}">
+ {% elif category.title == 'FASHION' %}
+  <a style="background-color:rgb(225,124,167)  "class="flow-text center-align modalBtns waves-effect waves-light btn modal-trigger" href="#{{ category.title }}-{{ category.id }}">
+ {% elif category.title == 'POETRY' %}
+  <a style="background-color:rgb(66,74,93)  "class="flow-text center-align modalBtns waves-effect waves-light btn modal-trigger" href="#{{ category.title }}-{{ category.id }}">
+  {% else %}
+ <a style="background-color:rgb(152,98,145)  "class="flow-text center-align modalBtns waves-effect waves-light btn modal-trigger" href="#{{ category.title }}-{{ category.id }}">
+ {% endif %}      
+      
+ 
+    <span>{{ category.title }}</span>
+    </a>
+</div>  
+   
+
+<div id="{{ category.title }}-{{ category.id }}" class="modal">
+     <div class="modal-content category-modal-content">
+         <div class="row">
+      <div class="col s12">
+          <h4>{{ category.title }}</h4>
+        <ul class="tabs">
+
+          <li class="tab col s3"><a class="active" href="#{{ category.title }}-tab1"><span class="category-modal-tab-btn mdl-badge" data-badge="{{ category.get_open_competitions.count }}">OnGoing</span></a></li>
+          <li class="tab col s3"><a href="#{{ category.title }}-tab2"><span class="category-modal-tab-btn mdl-badge" data-badge="{{ category.get_upcoming_competitions.count }}">UpComing</span></a></li>
+          <li class="tab col s3"><a href="#{{ category.title }}-tab3"><span class="category-modal-tab-btn mdl-badge" data-badge="{{ category.get_past_competitions.count }}">Past Events</span></a></li>
+        </ul>
+      </div>
+      
+      <div id="{{ category.title }}-tab1" class="col s12">
+      {% for competition in category.get_open_competitions %}
+      <br>
+        <a class="list-group-item list-group-item-primary" href="{% url 'competitions:competition' pk=competition.id %}">{{ competition.title }} <small class="text-muted"><br>Ends On : {{ competition.finish_date }}</small></a>
+      <br>
+      <br>
+      {% empty %}
+      <br>
+        Oops ! No ongoing events, Please check upcoming events.
+             
+      {% endfor %}
+      </div>
+      
+      <div id="{{ category.title }}-tab2" class="col s12">
+      {% for competition in category.get_upcoming_competitions %}
+      <br>
+        <a class="list-group-item list-group-item-primary" href="{% url 'competitions:competition' pk=competition.id %}">{{ competition.title }} <small class="text-muted"><br>Starts On : {{ competition.start_date }}</small></a>
+      <br>
+      <br>
+      {% empty %}
+      <br>
+        Oops ! No upcoming events for now, we will update soon. Keep Checking
+      {% endfor %}
+      </div>
+      
+      <div id="{{ category.title }}-tab3" class="col s12">
+      {% for competition in category.get_past_competitions %}
+        <br>
+        <a class="list-group-item list-group-item-primary" href="{% url 'competitions:competition' pk=competition.id %}">{{ competition.title }} <small class="text-muted"><br>Ended On : {{ competition.finish_date }}</small></a>
+       <br>
+       <br>
+      {% empty %}
+	  <br>
+        Sorry ! Nothing found.
+      {% endfor %}
+      </div>
+    </div>
+     </div>
+     <div class="modal-footer">
+       <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+     </div>
+ </div>
+
+<!-- <div class=" col-md-4 category-tile" data-category-id="{{ category.id }}">
+<div class="hover-effect">
+{% if category.title == 'PHOTOGRAPHY' %}
+  <div class="panel panel-danger panel-colorful">
+{% elif category.title == 'DANCE' %}
+  <div class="panel panel-purple panel-colorful">
+{% elif category.title == 'MUSIC' %}
+   <div class="panel panel-mint panel-colorful">
+{% elif category.title == 'MOVIES' %}
+   <div class="panel panel-warning panel-colorful">
+{% elif category.title == 'PAINTING' %}
+   <div class="panel panel-info panel-colorful">
+{% elif category.title == 'FASHION' %}
+   <div class="panel panel-pink panel-colorful">
+{% elif category.title == 'POETRY' %}
+   <div class="panel panel-dark panel-colorful">
+ {% else %}
+ <div class="panel panel-mint panel-colorful">
+{% endif %}      
+      <paper-material elevation = "4">
+    <div class="panel-body text-center">
+      <p class="h2 text-thin">{{ category.title }}</p>
+      {% if category.title == 'PHOTOGRAPHY' %}
+      <i class="fa fa-camera-retro fa-5x"></i>
+      {% elif category.title == 'MUSIC' %}
+      <i class="fa fa-music fa-5x"></i>
+       {% elif category.title == 'DANCE' %}
+      <i class="fa fa-male fa-5x"></i><i class="fa fa-random fa-4x"></i><i class="fa fa-female fa-5x"></i>
+      {% elif category.title == 'MOVIES' %}
+      <i class="fa fa-film fa-5x"></i>
+      {% elif category.title == 'PAINTING' %}
+      <i class="fa fa-paint-brush fa-5x"></i>
+      {% elif category.title == 'POETRY' %}
+      <i class="fa fa-pencil fa-5x"></i>
+      {% elif category.title == 'FASHION' %}
+      <i class="fa fa-diamond fa-5x"></i>
+      {% endif %}
+    </div>
+    
+    <div class="panel-body text-center">
+      <ul class="list-unstyled text-center pad-top mar-no clearfix"> -->
+        <!--
+        <li class="col-xs-4">
+          <span class="text-lg text-center text-bold"" >{{ category.get_upcoming_competitions.count }}</span>
+
+          <p class="text-muted  text-center text-uppercase text-semibold">Upcoming</p>
+        </li>
+        <li class="col-xs-4">
+          <span class="text-lg text-bold text-center" style="font-size:xx-large">{{ category.get_open_competitions.count }}</span>
+
+          <p class="text-muted text-uppercase text-center text-semibold">Currently Open</p>
+        </li>
+      
+        <li class="col-xs-4">
+          <span class="text-lg text-bold" >{{ category.get_past_competitions.count }}</span>
+
+          <p class="text-muted text-uppercase text-semibold">
+              Conquered
+              </p>
+        </li>
+      -->
+<!--      </ul>
+    </div>
+   
+      </paper-material>
+  </div>
+  </div>
+</div>
+<div class="modal fade category-info-{{ category.id }}" tabindex="-1" >
+  <div class="modal-dialog bg-gray">
+    <div class="modal-content bg-gray">
+-->
+      <!--Modal header-->
+<!--      <div class="modal-header">
+        <button data-dismiss="modal" class="close" type="button">
+          <span aria-hidden="true">X</span>
+        </button>
+        <h4 class="modal-title">{{ category.title }}</h4>
+      </div>
+-->
+      <!--Modal body-->
+<!--      <div class="modal-body">
+       
+									<div class="tab-base">
+-->					
+								<!--Nav Tabs-->
+<!--								<ul class="nav nav-tabs">
+                                
+									<li class="active">
+										<a data-toggle="tab" href="#demo-lft-tab-1" aria-expanded="false">OnGoing<span class="badge badge-purple">{{ category.get_open_competitions.count }}</span></a>
+									</li>
+									    <li class="">
+										<a data-toggle="tab" href="#demo-lft-tab-2" aria-expanded="false">UpComing<span class="badge badge-purple">{{ category.get_upcoming_competitions.count }}</span></a>
+									</li>
+									<li class="">
+										<a data-toggle="tab" href="#demo-lft-tab-3" aria-expanded="true">Past Events<span class="badge badge-purple">{{ category.get_past_competitions.count }}</span></a>
+									</li>
+								</ul>
+-->					
+								<!--Tabs Content-->
+<!--								<div class="tab-content">
+									<div id="demo-lft-tab-1" class="tab-pane fade active in">
+										<div class="list-group">
+                                              {% for competition in category.get_open_competitions %}
+											<a class="list-group-item list-group-item-primary" href="{% url 'competitions:competition' pk=competition.id %}">{{ competition.title }} <small class="text-muted">Ends On : {{ competition.finish_date }}</small></a>
+                                            
+										   {% empty %}
+                                             Oops ! No ongoing events, Please check upcoming events.
+                             
+                                             {% endfor %}
+										</div>
+									</div>
+									<div id="demo-lft-tab-2" class="tab-pane fade">
+									<div class="list-group">
+                                              {% for competition in category.get_upcoming_competitions %}
+											<a class="list-group-item list-group-item-primary" href="{% url 'competitions:competition' pk=competition.id %}">{{ competition.title }} <small class="text-muted">Starts On : {{ competition.start_date }}</small></a>
+											 
+                                             {% empty %}
+                                             Oops ! No upcoming events for now, we will update soon. 
+                                             Keep Checking
+                             
+                                       
+                                             {% endfor %}
+										</div>
+									</div>
+									<div id="demo-lft-tab-3" class="tab-pane fade ">
+								<div class="list-group">
+                                              {% for competition in category.get_past_competitions %}
+											<a class="list-group-item list-group-item-primary" href="{% url 'competitions:competition' pk=competition.id %}">{{ competition.title }} <small class="text-muted">Ended On : {{ competition.finish_date }}</small></a>
+											
+                                             {% empty %}
+                                             Sorry ! Nothing found.
+                             
+                                       
+                                             {% endfor %}
+										</div>
+									</div>
+								</div>
+							</div>
+                                        
+                                      
+							
+                                
+                                
+                               
+-->       
+                                <!--
+        <ul>
+          {% for competition in category.get_open_competitions %}
+            <li>
+            <a href="{% url 'competitions:competition' pk=competition.id %}">{{ competition.title }}</a>
+            <span class="pull-right">
+            {% if competition.get_winner %}
+              <a href="{% url 'profile' competition.get_winner.username %}">{{ competition.get_winner.username }}</a>
+            {% endif %}
+            </span>
+            </li>
+          {% empty %}
+            Empty list
+          {% endfor %}
+        </ul>
+        <h4>Past events</h4>
+        <ul>
+          {% for competition in category.get_past_competitions %}
+            <a href="{% url 'competitions:competition' pk=competition.id %}">{{ competition.title }}</a>
+            <span class="pull-right">
+              {% if competition.get_winner %}
+                <a href="{% url 'profile' competition.get_winner.username %}">{{ competition.get_winner.username }}</a>
+              {% endif %}
+            </span>
+          {% empty %}
+            Empty list
+          {% endfor %}
+        </ul>
+        <h4>Upcoming Events</h4>
+        <ul>
+          {% for competition in category.get_upcoming_competitions %}
+            <a href="{% url 'competitions:competition' pk=competition.id %}">{{ competition.title }}</a>
+            <span class="pull-right">
+            {{ competition.start_date }}
+            </span>
+          {% empty %}
+            Empty list
+          {% endfor %}
+        </ul>
+        -->
+<!--      </div>
+    
+      </div>
+    </div>
+  </div>
+-->
+

@@ -1,0 +1,374 @@
+<!doctype html>
+<!--
+  Material Design Lite
+  Copyright 2015 Google Inc. All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Material Design Lite</title>
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <!-- <meta name="mobile-web-app-capable" content="yes"> -->
+    <!-- <link rel="icon" sizes="192x192" href="images/android-desktop.png"> -->
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <!-- <meta name="apple-mobile-web-app-capable" content="yes"> -->
+    <!-- <meta name="apple-mobile-web-app-status-bar-style" content="black"> -->
+    <!-- <meta name="apple-mobile-web-app-title" content="Material Design Lite"> -->
+    <!-- <link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png"> -->
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <!-- <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png"> -->
+    <!-- <meta name="msapplication-TileColor" content="#3372DF"> -->
+
+    <!-- <link rel="shortcut icon" href="images/favicon.png"> -->
+
+    <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
+    <!--
+    <link rel="canonical" href="http://www.example.com/">
+    -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js">
+
+    </script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+    #view-source {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 40px;
+      margin-bottom: 40px;
+      z-index: 900;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+      <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
+        <div class="mdl-layout__header-row">
+
+          <span class="mdl-layout-title mdl-button mdl-js-button mdl-button--icon" id="demo-menu-lower-left" >
+              <i class="material-icons">notifications</i>
+        </span>
+        <div class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-left">
+        <ul style="padding-left:0;">
+          <h5>Notifications</h5>
+          <hr>
+          <p>Lorem ipsum dolor sit amet.</p>
+          <li class="mdl-menu__item">See All</li>
+        </ul>
+        </div>
+
+          <div class="mdl-layout-spacer"></div>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+            <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
+              <i class="material-icons">search</i>
+            </label>
+            <div class="mdl-textfield__expandable-holder">
+              <input class="mdl-textfield__input" type="text" id="search">
+              <label class="mdl-textfield__label" for="search">Enter your query...</label>
+            </div>
+          </div>
+          <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
+            <i class="material-icons">more_vert</i>
+          </button>
+          <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
+            <li class="mdl-menu__item">About</li>
+            <li class="mdl-menu__item">Contact</li>
+            <li class="mdl-menu__item">Legal information</li>
+          </ul>
+        </div>
+      </header>
+
+<div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+<img src="http://fakeimg.pl/240x64/3f4ebc/">
+  <header class="demo-drawer-header">
+
+    <div class="demo-avatar-dropdown">
+        <img src="http://fakeimg.pl/48/" class="demo-avatar">
+      <span>hello@example.com</span>
+      <div class="mdl-layout-spacer"></div>
+      <button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">arrow_drop_down</i>
+        <span class="visuallyhidden">Accounts</span>
+      </button>
+      <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
+        <li class="mdl-menu__item"><a href="#" id="tt2" ><i class="material-icons">settings</i>Settings</a></li>
+        <li class="mdl-menu__item"><a href="#" id="tt3" ><i class="material-icons">power_settings_new</i>Log out</a></li>
+      </ul>
+    </div>
+  </header>
+  <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
+    <!-- <a class="mdl-navigation__link" href="home.html"><i class="mdl-color-text--blue-grey-400 fa fa-2x fa-users" role="presentation" style="margin-right:20px;"></i>Talent Feed</a> -->
+    <!-- <a class="mdl-navigation__link" href="competitions.html"><i class="mdl-color-text--blue-grey-400 fa fa-2x fa-flag-checkered" role="presentation" style="margin-right:20px;"></i>Competitions</a> -->
+    <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 fa fa-2x fa-graduation-cap" role="presentation" style="margin-right:20px;"></i>Tutorials (soon)</a>
+    <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 fa fa-2x fa-shopping-cart" role="presentation" style="margin-right:20px;"></i>Hire Talent (soon)</a>
+    <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 fa fa-2x fa-user" role="presentation" style="margin-right:20px;"></i>My Portfolio (soon)</a>
+
+
+      <!-- <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone"><a href="#" id="tt1" ><span class="material-icons mdl-badge" data-badge="1">message</span></a>
+          <div class="mdl-tooltip" for="tt1">
+          Follow
+          </div>
+        </div>
+      </div> -->
+  </nav>
+</div>
+
+      <main class="mdl-layout__content mdl-color--grey-100">
+        <div class="mdl-grid demo-content">
+            <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+                <div class="mdl-tabs__tab-bar">
+                        <a href="#talent_feed" class="mdl-tabs__tab is-active">talent feed</a>
+                        <a href="#categories" class="mdl-tabs__tab">categories</a>
+                        <a href="#all_competitions" class="mdl-tabs__tab">All competitions</a>
+                        <a href="#results" class="mdl-tabs__tab">Results</a>
+                </div>
+                <div class="mdl-tabs__panel is-active" id="talent_feed">
+                    <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate, tenetur animi aliquid, perferendis nostrum dolor iste qui laborum numquam mollitia, non minus quia accusantium quisquam, atque. Odio, ut sint nam!</p>
+                    </div>
+                    
+                    <div class="demo-cards mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+                        <div class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--6-col-desktop">
+                          <div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
+                            <h2 class="mdl-card__title-text">Updates</h2>
+                          </div>
+                          <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--2-col">
+                                    <img src="http://fakeimg.pl/300/" style="height:auto;max-width:100%;">
+                                </div>
+                                <div class="mdl-cell mdl-cell--5-col">
+                                    <p>name</p>
+                                    <p>category</p>
+                                    <p>caption</p>
+                                </div>
+                                <div class="mdl-cell mdl-cell--5-col">
+                                    <p>25.01.2016 18:30</p>
+                                </div>
+                            </div>
+                          </div>
+                          <div class="mdl-card__actions mdl-card--border">
+                            <a href="#"><span class="material-icons mdl-badge" data-badge="1">thumb_up</span></a>
+                            <a href="#"><span class="material-icons mdl-badge" data-badge="1">comment</span></a>
+                          </div>
+                        </div>
+                    
+                      <div class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--6-col-desktop">
+                        <div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
+                          <h2 class="mdl-card__title-text">Updates</h2>
+                        </div>
+                        <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                          <div class="mdl-grid">
+                              <div class="mdl-cell mdl-cell--2-col">
+                                  <img src="http://fakeimg.pl/300/" style="height:auto;max-width:100%;">
+                              </div>
+                              <div class="mdl-cell mdl-cell--5-col">
+                                  <p>name</p>
+                                  <p>category</p>
+                                  <p>caption</p>
+                              </div>
+                              <div class="mdl-cell mdl-cell--5-col">
+                                  <p>25.01.2016 18:30</p>
+                              </div>
+                          </div>
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border">
+                          <a href="#"><span class="material-icons mdl-badge" data-badge="1">thumb_up</span></a>
+                          <a href="#"><span class="material-icons mdl-badge" data-badge="1">comment</span></a>
+                        </div>
+                      </div>
+                      <div class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--6-col-desktop">
+                        <div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
+                          <h2 class="mdl-card__title-text">Updates</h2>
+                        </div>
+                        <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                          <div class="mdl-grid">
+                              <div class="mdl-cell mdl-cell--2-col">
+                                  <img src="http://fakeimg.pl/300/" style="height:auto;max-width:100%;">
+                              </div>
+                              <div class="mdl-cell mdl-cell--5-col">
+                                  <p>name</p>
+                                  <p>category</p>
+                                  <p>caption</p>
+                              </div>
+                              <div class="mdl-cell mdl-cell--5-col">
+                                  <p>25.01.2016 18:30</p>
+                              </div>
+                          </div>
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border">
+                          <a href="#"><span class="material-icons mdl-badge" data-badge="1">thumb_up</span></a>
+                          <a href="#"><span class="material-icons mdl-badge" data-badge="1">comment</span></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mdl-tabs__panel" id="categories">
+                    <div class="row categories">
+                          <div class="col s3">
+                              <a class="flow-text center-align modalBtns waves-effect waves-light btn modal-trigger" href="#music">
+                              <span>Music</span>
+                              </a>
+                          </div>
+                          <div class="col s3">
+                              <a class="flow-text center-align modalBtns waves-effect waves-light btn modal-trigger" href="#dance">
+                              <span>Dance</span>
+                              </a>
+                          </div>
+                          <div class="col s3">
+                              <a class="flow-text center-align modalBtns waves-effect waves-light btn modal-trigger" href="#photo">
+                              <span>Photo</span>
+                              </a>
+                          </div>
+                          <div class="col s3">
+                              <a class="flow-text center-align modalBtns waves-effect waves-light btn modal-trigger" href="#fasion">
+                              <span>Fasion</span>
+                              </a>
+                          </div>
+                    </div>
+                    
+                         <div id="music" class="modal">
+                         <div class="modal-content">
+                             <div class="row">
+                          <div class="col s12">
+                              <h4>Music</h4>
+                            <ul class="tabs">
+                    
+                              <li class="tab col s3"><a class="active" href="#m1"><span class="mdl-badge" data-badge="4">OnGoing</span></a></li>
+                              <li class="tab col s3"><a href="#m2"><span class="mdl-badge" data-badge="2">UpComing</span></a></li>
+                              <li class="tab col s3"><a href="#m3"><span class="mdl-badge" data-badge="0">Past Events</span></a></li>
+                            </ul>
+                          </div>
+                          <div id="m1" class="col s12">Test 1</div>
+                          <div id="m2" class="col s12">Test 2</div>
+                          <div id="m3" class="col s12">Test 4</div>
+                        </div>
+                         </div>
+                         <div class="modal-footer">
+                           <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                         </div>
+                       </div>
+                       <div id="dance" class="modal">
+                       <div class="modal-content">
+                           <div class="row">
+                        <div class="col s12">
+                            <h4>Dance</h4>
+                          <ul class="tabs">
+                            <li class="tab col s3"><a href="#d1">OnGoing</a></li>
+                            <li class="tab col s3"><a class="active" href="#d2">UpComing</a></li>
+                            <li class="tab col s3"><a href="#d3">Past Events</a></li>
+                          </ul>
+                        </div>
+                        <div id="d1" class="col s12">Test 1</div>
+                        <div id="d2" class="col s12">Test 2</div>
+                        <div id="d3" class="col s12">Test 4</div>
+                      </div>
+                       </div>
+                       <div class="modal-footer">
+                         <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                       </div>
+                     </div>
+                     <div id="photo" class="modal">
+                     <div class="modal-content">
+                         <div class="row">
+                      <div class="col s12">
+                          <h4>Photo</h4>
+                        <ul class="tabs">
+                          <li class="tab col s3"><a href="#p1">OnGoing</a></li>
+                          <li class="tab col s3"><a class="active" href="#p2">UpComing</a></li>
+                          <li class="tab col s3"><a href="#p3">Past Events</a></li>
+                        </ul>
+                      </div>
+                      <div id="p1" class="col s12">Test 1</div>
+                      <div id="p2" class="col s12">Test 2</div>
+                      <div id="p3" class="col s12">Test 4</div>
+                    </div>
+                     </div>
+                     <div class="modal-footer">
+                       <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                     </div>
+                    </div>
+                    <div id="fasion" class="modal">
+                    <div class="modal-content">
+                        <div class="row">
+                     <div class="col s12">
+                         <h4>Fasion</h4>
+                       <ul class="tabs">
+                         <li class="tab col s3"><a href="#f1">OnGoing</a></li>
+                         <li class="tab col s3"><a class="active" href="#f2">UpComing</a></li>
+                         <li class="tab col s3"><a href="#f3">Past Events</a></li>
+                       </ul>
+                     </div>
+                     <div id="f1" class="col s12">Test 1</div>
+                     <div id="f2" class="col s12">Test 2</div>
+                     <div id="f3" class="col s12">Test 4</div>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                    </div>
+                    </div>
+                  </div>
+                  <div class="mdl-tabs__panel" id="all_competitions">
+                    test
+                  </div>
+                  <div class="mdl-tabs__panel" id="results">
+                    <table class="mdl-data-table mdl-js-data-table">
+                      <thead>
+                        <tr>
+                          <th class="mdl-data-table__cell--non-numeric"></th>
+                          <th class="mdl-data-table__cell--non-numeric">Competition</th>
+                          <th class="mdl-data-table__cell--non-numeric">Category</th>
+                          <th class="mdl-data-table__cell--non-numeric">Result</th>
+                          <th class="mdl-data-table__cell--non-numeric">Date</th>
+                          <th class="mdl-data-table__cell--non-numeric">Judge</th>
+                          <th class="mdl-data-table__cell--non-numeric">Winner</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                            <td class="mdl-data-table__cell--non-numeric">1</td>
+                          <td class="mdl-data-table__cell--non-numeric">let's play</td>
+                          <td class="mdl-data-table__cell--non-numeric">photo</td>
+                          <td class="mdl-data-table__cell--non-numeric">36</td>
+                          <td class="mdl-data-table__cell--non-numeric">25.01.2016</td>
+                          <td class="mdl-data-table__cell--non-numeric">Test</td>
+                          <td class="mdl-data-table__cell--non-numeric">The Best</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+            </div>
+        </div>
+      </main>
+
+
+
+</div>
+  <script src="js/app.js"></script>
+  
+
+</body>
+</html>

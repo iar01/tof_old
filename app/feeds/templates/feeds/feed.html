@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load staticfiles i18n competitions_extras %}
+
+{% load humanize %}
+
+{% block title %} {% trans 'Feed' %} {% endblock %}
+
+{% block head %}
+  <script src="{{ STATIC_URL }}{% static 'js/canvas-to-blob.min.js' %}"></script>
+  <script src="{{ STATIC_URL }}{% static 'js/jquery.iframe-transport.js' %}"></script>
+  <script src="{{ STATIC_URL }}{% static 'js/jquery.ui.widget.js' %}"></script>
+  <script src="{{ STATIC_URL }}{% static 'js/load-image.min.js' %}"></script>
+
+  <link href="{{ STATIC_URL }}{% static 'feeds/css/feeds.css' %}" rel="stylesheet">
+  <script src="{{ STATIC_URL }}{% static 'js/jquery.bullseye-1.0-min.js' %}"></script>
+  <script src="{{ STATIC_URL }}{% static 'feeds/js/feeds.js' %}"></script>
+{% endblock head %}
+
+{% block main %}
+  <div class="page-header">
+    <h1>Feed</h1>
+  </div>
+  <ul class="stream mdl-grid mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+    {% include 'feeds/partial_feed.html' with feed=feed %}
+  </ul>
+  
+  <script type="text/javascript">
+      $(document).ready(function(){
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal-trigger').leanModal();
+  });
+  </script>
+{% endblock main %}

@@ -1,0 +1,113 @@
+$badge_color: #828384;
+$count_color: #f05f40;
+
+.mdl-badge{
+    color: $badge_color;
+}
+
+.mdl-badge[data-badge]:after{
+    background: $count_color;
+}
+
+.red {
+    background-color: $count_color !important;
+}
+
+.header_search_btn{
+    padding-top: 12px !important;
+}
+
+#search{
+    margin: 0;
+}
+
+.remove-feed{
+    padding-top: .1em !important;
+}
+
+.ranking-btn{
+    position: fixed;
+    top: auto;
+    left: auto;
+    right: 20px;
+    bottom: 10px;
+    z-index: 999;
+    background: $count_color;
+}
+
+.participate-btn{
+    background: $count_color;
+}
+
+.remove-feed{
+    font-size: 1em !important;
+    color: $count_color !important;
+}
+
+.feed_edit_btn{
+    float: right;
+}
+
+.disabled_like{
+    pointer-events: none;
+    cursor: default;
+}
+.disabled_like .mdl-badge{
+    color: #dddddd;
+}
+
+.remove-modal-btn{
+    float: right;
+}
+
+.feed_edit_btn{
+    margin-right: 15px;
+}
+
+.feed_edit_btn,
+.remove-feed {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.feed_edit_btn i,
+.remove-feed i{
+    line-height: 30px;
+}
+
+.competitions-btns i {
+    padding-right: 5px;
+}
+
+.competitions-btns_help-text{
+    display: flex;
+    justify-content: space-around;
+}
+
+@media only screen and (max-width: 768px) {
+    .mdl-tabs__tab{
+        font-size: 0.8em;
+        padding: 0;
+    }
+    .category-modal-tab-btn{
+        font-size: 0.6em;
+    }
+
+    .category-modal-content.modal-content{
+        padding: 6px;
+    }
+
+    .category-modal-content .row .col{
+        padding: 0;
+        letter-spacing: 0;
+    }
+
+    .competitions-btns a{
+        margin: 1px;
+    }
+
+    .competitions-btns{
+        margin-bottom: 0;
+    }
+}

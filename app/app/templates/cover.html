@@ -1,0 +1,338 @@
+{% load i18n staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login page</title>
+
+
+	<!--STYLESHEET-->
+	<!--=================================================-->
+
+	<!--Open Sans Font [ OPTIONAL ] -->
+ 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=latin" rel="stylesheet">
+
+
+	<!--Bootstrap Stylesheet [ REQUIRED ]-->
+	<link href="{{ STATIC_URL }}{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+
+	<!--Nifty Stylesheet [ REQUIRED ]-->
+	<link href="{{ STATIC_URL }}{% static 'css/nifty.min.css' %}" rel="stylesheet">
+
+	
+	<!--Font Awesome [ OPTIONAL ]-->
+	<link href="{{ STATIC_URL }}{% static 'plugins/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+
+
+	<!--Demo [ DEMONSTRATION ]-->
+	<link href="{{ STATIC_URL }}{% static 'css/demo/nifty-demo.min.css' %}" rel="stylesheet">
+     <!--polymer-->
+   <script src="{{ STATIC_URL }}{% static 'bower_components/webcomponentsjs/webcomponents-lite.min.js' %}"></script>
+ 
+  <link rel="import" href="{{ STATIC_URL }}{% static 'bower_components/paper-button/paper-button.html' %}">
+   <link rel="import" href="{{ STATIC_URL }}{% static 'bower_components/paper-icon-button/paper-icon-button.html' %}">
+    <link rel="import" href="{{ STATIC_URL }}{% static 'bower_components/iron-icons/iron-icons.html' %}">
+  <link rel="import" href="{{ STATIC_URL }}{% static 'bower_components/paper-dialog/paper-dialog.html' %}">
+
+<style>
+		.my-bg{
+			background-image : url("{{ STATIC_URL }}{% static 'img/bg-img/header12.jpg' %}");
+		}
+	</style>
+
+	<!--SCRIPT-->
+	<!--=================================================-->
+
+	<!--Page Load Progress Bar [ OPTIONAL ]-->
+	<link href="{{ STATIC_URL }}{% static 'plugins/pace/pace.min.css' %}" rel="stylesheet">
+	<script src="{{ STATIC_URL }}{% static 'plugins/pace/pace.min.js' %}"></script>
+
+    <script>
+        function submitForm() {
+  document.getElementById('login-form').submit();
+}</script>
+	
+	<!--
+
+	REQUIRED
+	You must include this in your project.
+
+	RECOMMENDED
+	This category must be included but you may modify which plugins or components which should be included in your project.
+
+	OPTIONAL
+	Optional plugins. You may choose whether to include it in your project or not.
+
+	DEMONSTRATION
+	This is to be removed, used for demonstration purposes only. This category must not be included in your project.
+
+	SAMPLE
+	Some script samples which explain how to initialize plugins or components. This category should not be included in your project.
+
+
+	Detailed information and more samples can be found in the document.
+
+	-->
+		
+
+</head>
+
+<!--TIPS-->
+<!--You may remove all ID or Class names which contain "demo-", they are only used for demonstration. -->
+
+<body>
+    
+	<div id="container" class="cls-container">
+		
+		<!-- BACKGROUND IMAGE -->
+		<!--===================================================-->
+		<div id="bg-overlay" class="bg-img my-bg"></div>
+		
+		
+		<!-- HEADER -->
+		<!--===================================================-->
+		<div class="cls-header cls-header-lg">
+			<div class="cls-brand">
+				<a class="box-inline" href="/">
+					<!-- <img alt="Nifty Admin" src="img/logo.png" class="brand-icon"> -->
+					<span class="brand-title">The <span class="text-thin">Online Fest</span></span>
+				</a>
+			</div>
+		</div>
+        {% block body %}
+         <header class="header-content" >
+        <div  class="col-lg-8 col-lg-offset-2" style="margin:auto;height:100%;width:100%" >
+            <div data-brackets-id="646" class="header-content-inner">
+                <h1 data-brackets-id="647" class="title">It's Time, the world sees your talent</h1>
+                <hr data-brackets-id="648">
+               <paper-button raised class="bg-warning"><a  href="#about" class=" page-scroll">Find Out More</a></paper-button>
+                 
+            </div>
+      
+  </div>
+        <div class="cls-content col-lg-2" style="margin:auto;width:100%">
+			<div class="cls-content-sm panel">
+    <div class="panel">
+					
+								
+								<!--Panel body-->
+								<div class="panel-body">
+									<div class="tab-content">
+										<div class="tab-pane fade in active" id="demo-tabs-box-1">
+											     
+                                                       <h2 class="panel-title">Log In with</h2> 
+                                                    <paper-button style="background-color:#45619d" raised><i style="color:#eee"class="fa fa-facebook-official fa-2x"></i><a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}"> Facebook</a></paper-button>
+                                                
+                                                    <paper-button class="bg-warning" raised><i class="fa fa-google-plus fa-2x"></i><a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}"> Google+</a></paper-button>
+                                              
+                                            <h4 class="text-thin">Or</h4>
+                                            <h2 class="panel-title">Sign In to your account</h4>
+                                                                {% if form.non_field_errors %}
+                                                    {% for error in form.non_field_errors %}
+                                                        <div class="alert alert-danger alert-dismissable">
+                                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                        {{ error }}
+                                                        </div>
+                                                    {% endfor %}
+                                                    {% endif %}
+                                                                    <form id="login-form" method="post" action="{% url 'login' %}" role="form">
+                                                                        {% csrf_token %}
+                                                                        <div class="form-group{% if form.username.errors %} has-error{% endif %}">
+
+                                                                                <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                                                        <input type="text" class="form-control" placeholder="Username" id="username" name="username">
+                                                        {% for error in form.username.errors %}
+                                                            <label class="control-label">{{ error }}</label>
+                                                        {% endfor %}
+                                                        </div>
+                                                        <div class="form-group{% if form.password.errors %} has-error{% endif %}">
+
+                                                                                <div class="input-group-addon"><i class="fa fa-asterisk"></i></div>
+                                                        <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                                                        {% for error in form.password.errors %}
+                                                            <label class="control-label">{{ error }}</label>
+                                                        {% endfor %}
+                                                        </div>
+                                                                                
+                                                                                        <div class="form-group">
+                                                        <paper-button class="bg-info" raised onclick="submitForm()" >{% trans 'Log in' %}</paper-button>
+                                                                                        
+                                  
+                                                        <paper-button raised><a href="{% url 'signup' %}" data-toggle="tab" style="color:black">Sign Up</a></paper-button>
+                                                        </div>
+                                                        </form>
+                                                        </div>
+										
+                                        <div class="tab-pane fade" id="demo-tabs-box-2">
+											<h4 class="text-thin">Sign Up here</h4>
+											<div class="signup">
+                                                    <form action="{% url 'signup' %}" method="post" role="form">
+                                                    {% csrf_token %}
+                                                    {% for field in form.visible_fields %}
+                                                        <div class="form-group{% if field.errors %} has-error{% endif %}">
+                                                        <label for="{{ field.label }}">{{ field.label }}</label>
+                                                        {{ field }}
+                                                        {% if field.help_text %}
+                                                            <span class="help-block">{{ field.help_text|safe }}</span>
+                                                        {% endif %}
+                                                        {% for error in field.errors %}
+                                                            <label class="control-label">{{ error }}</label>
+                                                        {% endfor %}
+                                                        </div>
+                                                    {% endfor %}
+                                                    <button type="submit" class="btn btn-primary btn-lg">{% trans 'Create an account' %}</button>
+                                                    </form>
+                                                </div>
+										</div>
+									</div>
+								</div>
+							</div>
+			</div>
+           
+    </div>
+    
+    </header>
+		<!--===================================================-->
+           
+		<section onclick="clickHandler(event)">
+
+        
+		<!-- LOGIN FORM -->
+		<!--===================================================-->
+	
+		
+		
+		
+	</div>
+        <section data-brackets-id="651" class="bg-warning text-center"  style="margin:auto" id="about">
+        <div data-brackets-id="652" class="container text-center bg-warning" style="margin:auto">
+            <div data-brackets-id="653" class="row">
+                <div data-brackets-id="654" class="col-lg-8 col-lg-offset-2 text-center">
+                    
+                <h1 data-brackets-id="647" class="title text-thin">What is it all about ?</h1>
+                <hr style="margin:30px;color:black"/>
+                   <div style="margin:auto">
+                                 <i data-brackets-id="718" class="fa fa-picture-o fa-3x wow bounceIn animated" style="margin:10px;visibility: visible; -webkit-animation: bounceIn;"></i>
+                       <i data-brackets-id="718" class="fa fa-video-camera fa-3x wow bounceIn animated" style="margin:20;visibility: visible; -webkit-animation: bounceIn;"></i>
+       
+                    <h3 data-brackets-id="655" class="text-thin">Upload your work</h3>
+                    </div>
+                     <hr style="margin:30px;color:black"/>
+                     <div style="margin:auto">
+                                    <i data-brackets-id="718" class="fa fa-camera fa-3x wow bounceIn animated" style="margin:10px;visibility: visible; -webkit-animation: bounceIn;"></i>
+                                    <i data-brackets-id="718" class="fa fa-music fa-3x wow bounceIn animated" style="margin:10px;visibility: visible; -webkit-animation: bounceIn;"></i>
+                        <i data-brackets-id="718" class="fa fa-diamond fa-3x wow bounceIn animated" style="margin:10px;visibility: visible; -webkit-animation: bounceIn;"></i>
+                        <i data-brackets-id="718" class="fa fa-paint-brush fa-3x wow bounceIn animated" style="margin:10px;visibility: visible; -webkit-animation: bounceIn;"></i>
+                        <h3 class="text-thin"> Photography, Music, Dance and many other</h3>
+                    </div>
+        
+                <hr style="margin:30px;color:black"/>
+               <div style="margin:auto">
+                        <i data-brackets-id="718" class="fa fa-trophy fa-5x wow bounceIn animated" style="margin:10px;visibility: visible; -webkit-animation: bounceIn;"></i>
+                                        
+                    
+                                <h3 data-brackets-id="655" class="text-thin">Participate in competitions</h3>
+               </div>   
+                    <hr style="margin:30px;color:black"/>
+                 <div style="margin:auto">
+                                            <i data-brackets-id="718" class="fa fa-money fa-3x wow bounceIn animated" style="margin:10px;visibility: visible; -webkit-animation: bounceIn;"></i>
+                        <i data-brackets-id="718" class="fa fa-gift fa-3x wow bounceIn animated" style="margin:10px;visibility: visible; -webkit-animation: bounceIn;"></i>
+                        
+                                    <h3 class="text-thin">Win Cash and many prizes</h3>
+                 </div>
+                 <hr style="margin:30px;color:black"/>
+                     <paper-button raised style="background-color:#fff" ><a href="{% url 'signup' %}" data-toggle="tab" style="color:black;">Sign Up Now</a></paper-button>
+                              </div>
+                              <hr style="margin:30px;color:black"/>
+            </div>
+        </div>
+    </section>
+    {% endblock body %}
+  <section data-brackets-id="710" id="contact" style="background-color:#fff">
+        <div data-brackets-id="711" class="container">
+            <div data-brackets-id="712" class="row">
+                <div data-brackets-id="713" class="col-lg-8 col-lg-offset-2 text-center">
+                  <h2 data-brackets-id="714" class="section-heading">Contact us</h2>
+                  <hr data-brackets-id="715" class="primary">
+                </div>            
+                <div data-brackets-id="720" class="col-lg-4 text-center">
+                    <i class="fa fa-copyright"></i><a> All rights reserved </a>
+                    <i class="fa fa-certificate" style="margin:10px"></i>
+                    <i data-brackets-id="721" class="fa fa-envelope-o  wow bounceIn" data-wow-delay=".1s" style="visibility: visible; -webkit-animation: bounceIn 0.1s 0.1s;"></i>
+                    <a data-brackets-id="723" href="mailto:contact@theonlinefest.com">contact@theonlinefest.com</a>
+                 </div>
+                 <hr style="margin:30px;color:black"/>
+            </div>
+        </div>
+    </section>
+	<!--===================================================-->
+	<!-- END OF CONTAINER -->
+
+
+		
+	<!--JAVASCRIPT-->
+	<!--=================================================-->
+
+	<!--jQuery [ REQUIRED ]-->
+	<script src="{{ STATIC_URL }}{% static 'js/jquery-2.1.1.min.js' %}"></script>
+
+
+	<!--BootstrapJS [ RECOMMENDED ]-->
+	<script src="{{ STATIC_URL }}{% static 'js/bootstrap.min.js' %}"></script>
+
+
+	<!--Fast Click [ OPTIONAL ]-->
+	<script src="{{ STATIC_URL }}{% static 'plugins/fast-click/fastclick.min.js' %}"></script>
+
+
+	<!--Nifty Admin [ RECOMMENDED ]-->
+	<script src="{{ STATIC_URL }}{% static 'js/nifty.min.js' %}"></script>
+
+
+	<!--Background Image [ DEMONSTRATION ]-->
+	<script src="{{ STATIC_URL }}{% static 'js/demo/bg-images.js' %}"></script>
+
+	  <script>
+    function clickHandler(e) {
+      var button = e.target;
+      while (!button.hasAttribute('data-dialog') && button !== document.body) {
+        button = button.parentElement;
+      }
+      if (!button.hasAttribute('data-dialog')) {
+        return;
+      }
+      var id = button.getAttribute('data-dialog');
+      var dialog = document.getElementById(id);
+      if (dialog) {
+        dialog.open();
+      }
+    }
+  </script>
+	<!--
+
+	REQUIRED
+	You must include this in your project.
+
+	RECOMMENDED
+	This category must be included but you may modify which plugins or components which should be included in your project.
+
+	OPTIONAL
+	Optional plugins. You may choose whether to include it in your project or not.
+
+	DEMONSTRATION
+	This is to be removed, used for demonstration purposes only. This category must not be included in your project.
+
+	SAMPLE
+	Some script samples which explain how to initialize plugins or components. This category should not be included in your project.
+
+
+	Detailed information and more samples can be found in the document.
+
+	-->
+		
+
+</body>
+</html>

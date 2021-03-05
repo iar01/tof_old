@@ -1,0 +1,68 @@
+// vendor
+@import "../../node_modules/materialize-css/sass/materialize.scss";
+@import "../../node_modules/material-design-lite/src/material-design-lite.scss";
+
+@import "../../bower_components/fontawesome/scss/font-awesome.scss";
+// @import "partials/material-modal";
+// mine
+@import "partials/mdl-styles";
+@import "partials/btns";
+@import "partials/competitions";
+@import "partials/feeds";
+// @import "partials/bootstrap";
+
+.categories{
+    margin-top: 30px;
+}
+
+.clearfix:after {
+        visibility: hidden;
+        display: block;
+        content: "";
+        clear: both;
+        height: 0;
+        }
+
+.modalBtns{
+    height: 150px;
+    width: 100%;
+}
+
+.modalBtns span{
+    top: calc(50% - 18px);
+    display: block;
+    position: relative;
+}
+
+.mdl-tabs__tab-bar{
+    justify-content: space-between;
+}
+
+.categories_modal_nav{
+    display: flex;
+}
+
+.mdl-layout__drawer .mdl-navigation .mdl-navigation__link{
+    padding: 0px 40px;
+}
+
+nav i{
+    padding-top: 10px;
+}
+
+a{
+    color: $badge_color;
+}
+
+.sidebar_username{
+    padding-left: 10px;
+}
+
+.sidebar_setting_items{
+    position: relative;
+    bottom: 5px;
+}
+
+.demo-avatar-dropdown .mdl-menu__item{
+    line-height: 0;
+}

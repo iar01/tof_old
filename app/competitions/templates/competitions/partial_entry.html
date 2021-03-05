@@ -1,0 +1,42 @@
+{% load staticfiles %}
+
+<div class="panel entry" data-entry-id="{{ entry.id }}">
+  <!--Panel heading-->
+  <div class="panel-heading">
+
+    <div class="panel-control">
+      <i class="fa fa-thumbs-o-up fa-lg fa-fw"></i>
+      <span class="badge badge-pink likes">{{ entry.feed.likes }}</span>
+    </div>
+    <h3 class="panel-title">{{ entry.title }}</h3>
+  </div>
+  <div class="text-center">
+    <div class="panel-body">
+      <img alt="Avatar" class="img-md img-circle img-border mar-btm" src="{% static 'img/av6.png' %}">
+      <h4 class="mar-no">
+        {% if user.full_name %}
+          {{ user.full_name }}
+        {% else %}
+          {{ user.username }}
+        {% endif %}
+      </h4>
+    </div>
+    <div class="pad-all">
+      <div class="pad-btm">
+        <button class="btn btn-primary like">Like</button>
+      </div>
+    </div>
+  </div>
+  <!--Panel body-->
+  <div class="panel-body">
+    {% if type == 'txt' %}
+      <p>{{ entry.text }}</p>
+    {% elif type == 'img' %}
+      <img src="{{ entry.image_url }}" width="100%" height="500" alt=""/>
+    {% else %}
+      <div class="embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" height="500" width="100%" src="{{ entry.video_url }}"></iframe>
+      </div>
+    {% endif %}
+  </div>
+</div>

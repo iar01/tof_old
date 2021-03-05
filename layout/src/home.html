@@ -1,0 +1,32 @@
+//= templates/header.html
+
+//= templates/sidebar.html
+
+      <main class="mdl-layout__content mdl-color--grey-100">
+        <div class="mdl-grid demo-content">
+            <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+                <div class="mdl-tabs__tab-bar">
+                        <a href="#talent_feed" class="mdl-tabs__tab is-active">talent feed</a>
+                        <a href="#categories" class="mdl-tabs__tab">categories</a>
+                        <a href="#all_competitions" class="mdl-tabs__tab">All competitions</a>
+                        <a href="#results" class="mdl-tabs__tab">Results</a>
+                </div>
+                <div class="mdl-tabs__panel is-active" id="talent_feed">
+                    //= templates/talent_feed.html
+                  </div>
+                  <div class="mdl-tabs__panel" id="categories">
+                    //= templates/categories.html
+                  </div>
+                  <div class="mdl-tabs__panel" id="all_competitions">
+                    test
+                  </div>
+                  <div class="mdl-tabs__panel" id="results">
+                    //= templates/results.html
+                  </div>
+            </div>
+        </div>
+      </main>
+
+
+
+//= templates/footer.html

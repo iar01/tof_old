@@ -1,0 +1,17 @@
+[
+{
+    "model": "feeds.feed",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "date": "2016-01-16T16:06:59.916Z",
+        "post": "qweEnter Caption",
+        "parent": null,
+        "likes": 0,
+        "comments": 0,
+        "image_url": "http://res.cloudinary.com/dc6azhfqm/image/upload/v1452960387/o9uhn7pfnsldd8iwrdro.jpg",
+        "video_url": "",
+        "competition": 1
+    }
+}
+]

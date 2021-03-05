@@ -1,0 +1,403 @@
+﻿{% load i18n staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta property="fb:app_id"        content="1686173174962992"/>
+      <meta property="og:url"          content="http://theonlinefest.com/accounts/login/" />
+    <meta property="og:type"          content="website" />
+	<meta property="og:title"         content="Please vote for me !" />
+  
+	<meta property="og:description"   content="Win prizes by participating in online competitions like Photography, Music, Dance etc on theonlinefest.com. It's Free ! Join now !'" />
+	<title>The Online Fest</title>
+
+
+	<!--STYLESHEET-->
+	<!--=================================================-->
+
+	<!--Open Sans Font [ OPTIONAL ] -->
+ 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=latin" rel="stylesheet">
+
+
+	<!--Bootstrap Stylesheet [ REQUIRED ]-->
+	<link href="{{ STATIC_URL }}{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+
+	<!--Nifty Stylesheet [ REQUIRED ]-->
+	<link href="{{ STATIC_URL }}{% static 'css/nifty.min.css' %}" rel="stylesheet">
+
+
+	<!--Font Awesome [ OPTIONAL ]-->
+	<link href="{{ STATIC_URL }}{% static 'plugins/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+
+
+	<!--Demo [ DEMONSTRATION ]-->
+	<link href="{{ STATIC_URL }}{% static 'css/demo/nifty-demo.min.css' %}" rel="stylesheet">
+     <!--polymer-->
+   <script src="{{ STATIC_URL }}{% static 'bower_components/webcomponentsjs/webcomponents-lite.min.js' %}"></script>
+
+  <link rel="import" href="{{ STATIC_URL }}{% static 'bower_components/paper-button/paper-button.html' %}">
+   <link rel="import" href="{{ STATIC_URL }}{% static 'bower_components/paper-icon-button/paper-icon-button.html' %}">
+    <link rel="import" href="{{ STATIC_URL }}{% static 'bower_components/iron-icons/iron-icons.html' %}">
+  <link rel="import" href="{{ STATIC_URL }}{% static 'bower_components/paper-dialog/paper-dialog.html' %}">
+ <link rel="import" href="{{ STATIC_URL }}{% static 'bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html' %}">
+<style>
+		.my-bg{
+			background-image : url("{{ STATIC_URL }}{% static 'img/bg-img/header12.jpg' %}");
+		}
+	</style>
+
+	<!--SCRIPT-->
+	<!--=================================================-->
+
+	<!--Page Load Progress Bar [ OPTIONAL ]-->
+	<link href="{{ STATIC_URL }}{% static 'plugins/pace/pace.min.css' %}" rel="stylesheet">
+	<script src="{{ STATIC_URL }}{% static 'plugins/pace/pace.min.js' %}"></script>
+
+    <script>
+        function submitForm() {
+  document.getElementById('login-form').submit();
+}</script>
+
+	<!--
+
+	REQUIRED
+	You must include this in your project.
+
+	RECOMMENDED
+	This category must be included but you may modify which plugins or components which should be included in your project.
+
+	OPTIONAL
+	Optional plugins. You may choose whether to include it in your project or not.
+
+	DEMONSTRATION
+	This is to be removed, used for demonstration purposes only. This category must not be included in your project.
+
+	SAMPLE
+	Some script samples which explain how to initialize plugins or components. This category should not be included in your project.
+
+
+	Detailed information and more samples can be found in the document.
+
+	-->
+
+
+</head>
+
+<!--TIPS-->
+<!--You may remove all ID or Class names which contain "demo-", they are only used for demonstration. -->
+
+<body>
+<section onclick="clickHandler(event)">   
+	<div id="container" class="cls-container">
+
+		<!-- BACKGROUND IMAGE -->
+		<!--===================================================-->
+		<div id="bg-overlay" class="bg-img my-bg"></div>
+
+
+		<!-- HEADER -->
+		<!--===================================================-->
+		<div class="cls-header cls-header-lg">
+			<div class="cls-brand">
+				<a class="box-inline" href="login">
+					<!-- <img alt="Nifty Admin" src="img/logo.png" class="brand-icon"> -->
+					<span class="brand-title">The <span class="text-thin">Online Fest</span></span>
+				</a>
+			</div>
+		</div>
+        {% block body %}
+         <header class="header-content" >
+        <div  class="col-lg-8 col-lg-offset-2" style="margin:auto;height:100%;width:100%" >
+            <div data-brackets-id="646" class="header-content-inner">
+                <h1 data-brackets-id="647" class="title">It's Time, the world sees your talent</h1>
+                <hr data-brackets-id="648">
+               <paper-button raised class="bg-warning"><a  href="#about" class=" page-scroll">Find Out More</a></paper-button>
+
+            </div>
+
+  </div>
+        <div class="cls-content col-lg-2" style="margin:auto;width:100%">
+			<div class="cls-content-sm panel">
+    <div class="panel">
+
+
+								<!--Panel body-->
+								<div class="panel-body">
+									<div class="tab-content">
+										<div class="tab-pane fade in active" id="demo-tabs-box-1">
+
+                                                       <h2 class="panel-title">Log In with</h2>
+                                                       
+                                                    <paper-button style="background-color:#45619d" raised><i style="color:#eee"class="fa fa-facebook-official fa-2x"></i><a href="{% url 'social:begin' 'facebook' %}"> Facebook</a></paper-button>
+                                                    
+                                                    <paper-button class="bg-warning" raised>
+                                                        <i class="fa fa-google-plus fa-2x"></i><a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}"> Google+</a></paper-button>
+                               <br>
+                               <br>
+                               <br>
+                               <hr style="margin:5px"/>
+                               <!--
+                                            <h4 class="text-thin">Or</h4>
+                                            <h2 class="panel-title">Sign In to your account</h4>
+                                                                {% if form.non_field_errors %}
+                                                    {% for error in form.non_field_errors %}
+                                                        <div class="alert alert-danger alert-dismissable">
+                                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                        {{ error }}
+                                                        </div>
+                                                    {% endfor %}
+                                                    {% endif %}
+                                                                    <form id="login-form" method="post" action="{% url 'login' %}" role="form">
+                                                                        {% csrf_token %}
+																																				{% if next %}
+        																																<input type="hidden" name="next" value="{{ next }}" />
+        																																{% endif %}
+
+                                                                        <div class="form-group{% if form.username.errors %} has-error{% endif %}">
+
+                                                                                <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                                                        <input type="text" class="form-control" placeholder="Username" id="username" name="username">
+                                                        {% for error in form.username.errors %}
+                                                            <label class="control-label">{{ error }}</label>
+                                                        {% endfor %}
+                                                        </div>
+                                                        <div class="form-group{% if form.password.errors %} has-error{% endif %}">
+
+                                                                                <div class="input-group-addon"><i class="fa fa-asterisk"></i></div>
+                                                        <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                                                        {% for error in form.password.errors %}
+                                                            <label class="control-label">{{ error }}</label>
+                                                        {% endfor %}
+                                                        </div>
+
+                                                                                        <div class="form-group">
+                                                        <paper-button class="bg-info" raised onclick="submitForm()" >{% trans 'Log in' %}</paper-button></br></br>
+
+
+                                             -->          
+                                                      <a style="color:#000" class="text-thin">You here by accept these </a>  <a style="color:#007fff" class= "text-thin"data-dialog="terms-condition" href="#"><u>Terms & Conditions</u></a> <a style="color:#000" class="text-thin"> by using this website</a>
+                                                        </div>
+                                                        </form>
+                                                        </div>
+
+
+									</div>
+								</div>
+							</div>
+			</div>
+
+    </div>
+
+    </header>
+		<!--===================================================-->
+
+		
+
+
+		<!-- LOGIN FORM -->
+		<!--===================================================-->
+
+
+
+
+	</div>
+        <section data-brackets-id="651" class="bg-warning text-center"  style="margin:auto" id="about">
+        <div data-brackets-id="652" class="container text-center bg-warning" style="margin:auto">
+            <div data-brackets-id="653" class="row">
+                <div data-brackets-id="654" class="col-lg-8 col-lg-offset-2 text-center">
+
+                <h1 data-brackets-id="647" class="title text-thin">What is it all about ?</h1>
+                <hr style="margin:30px;color:black"/>
+                   <div style="margin:auto">
+                                 <i data-brackets-id="718" class="fa fa-picture-o fa-3x wow bounceIn animated" style="margin:10px;visibility: visible; -webkit-animation: bounceIn;"></i>
+                       <i data-brackets-id="718" class="fa fa-video-camera fa-3x wow bounceIn animated" style="margin:20;visibility: visible; -webkit-animation: bounceIn;"></i>
+
+                    <h3 data-brackets-id="655" class="text-thin">Upload your work</h3>
+                    </div>
+                     <hr style="margin:30px;color:black"/>
+                     <div style="margin:auto">
+                                    <i data-brackets-id="718" class="fa fa-camera fa-3x wow bounceIn animated" style="margin:10px;visibility: visible; -webkit-animation: bounceIn;"></i>
+                                    <i data-brackets-id="718" class="fa fa-music fa-3x wow bounceIn animated" style="margin:10px;visibility: visible; -webkit-animation: bounceIn;"></i>
+                        <i data-brackets-id="718" class="fa fa-diamond fa-3x wow bounceIn animated" style="margin:10px;visibility: visible; -webkit-animation: bounceIn;"></i>
+                        <i data-brackets-id="718" class="fa fa-paint-brush fa-3x wow bounceIn animated" style="margin:10px;visibility: visible; -webkit-animation: bounceIn;"></i>
+                        <h3 class="text-thin"> Photography, Music, Dance and many other</h3>
+                    </div>
+
+                <hr style="margin:30px;color:black"/>
+               <div style="margin:auto">
+                        <i data-brackets-id="718" class="fa fa-trophy fa-5x wow bounceIn animated" style="margin:10px;visibility: visible; -webkit-animation: bounceIn;"></i>
+
+
+                                <h3 data-brackets-id="655" class="text-thin">Participate in competitions</h3>
+               </div>
+                    <hr style="margin:30px;color:black"/>
+                 <div style="margin:auto">
+                                            <i data-brackets-id="718" class="fa fa-money fa-3x wow bounceIn animated" style="margin:10px;visibility: visible; -webkit-animation: bounceIn;"></i>
+                        <i data-brackets-id="718" class="fa fa-gift fa-3x wow bounceIn animated" style="margin:10px;visibility: visible; -webkit-animation: bounceIn;"></i>
+
+                                    <h3 class="text-thin">Win Cash and many prizes</h3>
+                 </div>
+                 <hr style="margin:30px;color:black"/>
+                    
+                              </div>
+                              <hr style="margin:30px;color:black"/>
+            </div>
+        </div>
+    </section>
+     <paper-dialog id="terms-condition">
+     
+					<paper-dialog-scrollable>
+								<!--Panel with Header-->
+								<!--===================================================-->
+								<div class="panel">
+									<div class="panel-heading text-center">
+										<h3 class="panel-title">Terms & Conditions</h3>
+									</div>
+									
+                                    <div class="panel-body">
+									<p>	By entering the Competition You hereby accept these Competition Rules and the Terms and Conditions.
+</br></br>1.1 All Competitions conducted on www.theonlinefest.com are free to enter.
+</br>1.2 Entries must be submitted by the Deadline mentioned in the competition specific rules document
+</br>1.3 By entering the Competition, You agree and acknowledge that www.theonlinefest.com is permitted to receive your registration data.  
+</br>2. To enter, you must upload the entry via the following website: www.theonlinefest.com, following the on-screen instructions and competition specific rules carefully.
+</br>2.1 All entrants must be able to supply a high resolution image/video for authenticity and verification of the entry, if and when required.
+</br>3.0 The decision of the Judge & www.theonlinefest.com or Ciden United will be final and binding.
+</br>3.1 The Online Fest reserves the right, in its sole discretion, to disqualify and remove any entry that does not comply with the following requirements, even after the entry is submitted on the Website. 
+</br>You warrant and represent, in respect of each entry submitted by You (“Entry”), as follows:
+</br>3.1.1 You are the sole owner and author of each Entry
+</br>3.1.2 You have the right to make your entry available to the Competition
+</br>3.1.3 Each Entry does not contain personally identifiable information about you or any other person(s)
+</br>3.1.4 Each Entry does not contain any infringing, threatening, false, misleading, abusive, harassing, libelous, defamatory, vulgar, obscene, scandalous, inflammatory, pornographic or profane content
+</br>3.1.5 Each Entry does not contain any material that could constitute or encourage conduct which would be considered a criminal offence, give rise to civil liability, or otherwise violate any law
+</br>3.1.6 Each Entry does not infringe upon the copyrights, trademarks, contract rights, or any other intellectual property rights of any third person or entity, or violate any person’s rights of privacy or publicity, and Your Entry does not include:
+</br>3.1.6.1 trademarks owned by third parties
+</br>3.1.6.2 copyrighted materials owned by third parties (including movie dialogue or musical compositions)
+</br>3.1.6.3 Names, likenesses, voices or other characteristics identifying celebrities or other public figures, living or dead
+</br>3.1.7 Entries which contain any commercial content that promotes any product or service other than that of www.theonlinefest.com or Ciden United.
+</br>
+</br>3.1.8 Entries containing screen credits
+</br>3.1.9 No animals were harmed or manipulated in the making of the image
+</br>3.2 You agree to fully indemnify www.theonlinefest.com or Ciden United in respect of all royalties, fees and any other monies owing to any person by reason of your breaching any of the foregoing. 
+</br>3.3 You confirm that each person depicted in the Entry has granted permission to be portrayed as shown. Any costumes, props or other materials used must be rented or borrowed with the permission of the owner, and all other relevant permissions must have been obtained. 
+</br>4. www.theonlinefest.com may run an online rating process whereby members of the public may vote for a favorite Entry. If there is sufficient evidence (in www.theonlinefest.com  or Ciden United ‘s  sole discretion) to suggest malpractice and manipulation of the rating process, then www.TheOnlineFest .com/ Ciden United has the right to remove the relevant Entry or Entries and, if necessary, award the prize to a different contestant. www.theonlinefest.com or Ciden United’s decisions are final. 
+</br>5. www.theonlinefest.com or Ciden United recognizes you, the author of the image, retain full ownership of the copyright in each Entry. 
+</br>5.1 All entrants understand that any image submitted to the competition may be used by theonlinefest.com or Ciden United, and its Event Partners, for marketing and promotional purposes of You the author and the event only. You hereby grant The Online Fest a non-exclusive, irrevocable license in each Entry throughout the world in all media for any use connected to the promotion of You the author , www.theonlinefest.com or Ciden United and/or competition, including, but not limited to:
+</br>(a) judging the Competition
+</br>(b) displaying the winning entries and runners up at promotional material promoting You the author,www.TheOnlineFest.com/ Ciden United and/or competition 
+</br>(c) inclusion within the Website
+</br>(d) inclusion within any materials promoting of the Competition and / or any exhibition organised by The Online Fest, in the promotion of the The Online Fest
+</br>(e) sub-licencing the Entries to the press for reproduction in connection with the Competition and any exhibition
+</br>(f) allowing viewers of www.theonlinefest.com to view images on a computer screen, PDA or mobile telephone .Please also refer to clause 6. 
+</br>(g) You hereby acknowledge and agree if Your image is included in website or any promotional material of www.TheOnlineFest.com/ Ciden United and/or competition your image will remain perpetually in the device royalty free.   
+</br>
+</br>6. You acknowledge that it is your responsibility for protecting any Entry against image misuse by any third party, for example, but not limited to the insertion of a watermark. www.theonlinefest.com or Ciden United and its Event Partners assume no responsibility and are not liable for any image misuse. 
+</br>7. www.theonlinefest.com or Ciden United assumes no responsibility for any incorrect, inaccurate or incomplete information, whether caused by website users or by any of the equipment or programming associated with or utilized in the Competition, and www.TheOnlineFest.com assumes no responsibility for technical, hardware or software failure of any kind, for lost network connections, garbled computer transmissions, other problems or technical malfunctions with regard to the Competition.
+</br>8. www.theonlinefest.com or Ciden United assumes no responsibility for any error, omission, corruption, interruption, deletion, defect, delay in operation or transmission, communications line failure, theft or destruction or unauthorized access to or alteration of Entries. 
+</br>9.www.theonlinefest.com / Ciden United is not responsible for any problems or technical malfunction of any telephone network or lines, computer on-line systems, servers, computer equipment, software, failure of any e-mail addressed to www.theonlinefest.com or Ciden United on account of technical problems, human error or traffic congestion on the internet or any website, or any combination thereof, including any injury or damage to your or any other person's computer related to or resulting from participation or downloading any materials in the Competition. If for any reason a contestant’s entry cannot be viewed or is not capable of running as planned, including infection by computer viruses, bugs, tampering, unauthorized intervention, fraud or technical failures, www.theonlinefest.com or Ciden United assumes no responsibility.
+</br>8. In no event will www.theonlinefest.com or Ciden United, its parents, affiliates, subsidiaries and related companies, Event Partners, its advertising or promotion agencies, or its officers, directors, employees, shareholders, representatives or agents be responsible or liable for any damages or losses of any kind, including direct, indirect, incidental, consequential, special or punitive damages arising out of any contestant’s access to and use of the Website. Without limiting the generality of the foregoing, everything on the Website is provided "as is", without warranty of any kind, either express or implied, including but not limited to, the implied warranties of merchantability, fitness for purpose or use or non-infringement. 
+</br>9. You agree to participate in related publicity and to the use of your name and likeness for the purposes of advertising, promotion and publicity without additional compensation. 
+</br>10. There are no cash alternatives available for gift prize winners.
+</br>11. Winners will be announced online. 
+</br>12. It may take upto 30 days for the gift/cash prize to reach you from the date when you have shared your contact/bank details with us.
+</br>13. www.theonlinefest.com or Ciden United is not responsible for the loss/damage of prize in the transit or any financial mistakes done at Bank’s end , however utmost precautions will be taken.
+</br>
+</p>
+									</div>
+								</div>
+								<!--===================================================-->
+								<!--End Panel with Header-->
+					
+							
+     </paper-dialog-scrollable>
+ </paper-dialog>
+    {% endblock body %}
+  <section data-brackets-id="710" id="contact" style="background-color:#fff">
+        <div data-brackets-id="711" class="container">
+            <div data-brackets-id="712" class="row">
+                <div data-brackets-id="713" class="col-lg-8 col-lg-offset-2 text-center">
+                  <h2 data-brackets-id="714" class="section-heading">Contact us</h2>
+                  <hr data-brackets-id="715" class="primary">
+                </div>
+                <div data-brackets-id="720" class="col-lg-4 text-center">
+                    <i class="fa fa-copyright"></i><a> All rights reserved </a>
+                    <i class="fa fa-certificate" style="margin:10px"></i>
+                    <i data-brackets-id="721" class="fa fa-envelope-o  wow bounceIn" data-wow-delay=".1s" style="visibility: visible; -webkit-animation: bounceIn 0.1s 0.1s;"></i>
+                    <a data-brackets-id="723" href="mailto:contact@theonlinefest.com">contact@theonlinefest.com</a>
+                 </div>
+                 <hr style="margin:30px;color:black"/>
+            </div>
+        </div>
+    </section>
+    
+		</section>
+	<!--===================================================-->
+	<!-- END OF CONTAINER -->
+
+
+
+	<!--JAVASCRIPT-->
+	<!--=================================================-->
+
+	<!--jQuery [ REQUIRED ]-->
+	<script src="{{ STATIC_URL }}{% static 'js/jquery-2.1.1.min.js' %}"></script>
+
+
+	<!--BootstrapJS [ RECOMMENDED ]-->
+	<script src="{{ STATIC_URL }}{% static 'js/bootstrap.min.js' %}"></script>
+
+
+	<!--Fast Click [ OPTIONAL ]-->
+	<script src="{{ STATIC_URL }}{% static 'plugins/fast-click/fastclick.min.js' %}"></script>
+
+
+	<!--Nifty Admin [ RECOMMENDED ]-->
+	<script src="{{ STATIC_URL }}{% static 'js/nifty.min.js' %}"></script>
+
+
+	<!--Background Image [ DEMONSTRATION ]-->
+	<script src="{{ STATIC_URL }}{% static 'js/demo/bg-images.js' %}"></script>
+
+	  <script>
+    function clickHandler(e) {
+      var button = e.target;
+      while (!button.hasAttribute('data-dialog') && button !== document.body) {
+        button = button.parentElement;
+      }
+      if (!button.hasAttribute('data-dialog')) {
+        return;
+      }
+      var id = button.getAttribute('data-dialog');
+      var dialog = document.getElementById(id);
+      if (dialog) {
+        dialog.open();
+      }
+    }
+  </script>
+	<!--
+
+	REQUIRED
+	You must include this in your project.
+
+	RECOMMENDED
+	This category must be included but you may modify which plugins or components which should be included in your project.
+
+	OPTIONAL
+	Optional plugins. You may choose whether to include it in your project or not.
+
+	DEMONSTRATION
+	This is to be removed, used for demonstration purposes only. This category must not be included in your project.
+
+	SAMPLE
+	Some script samples which explain how to initialize plugins or components. This category should not be included in your project.
+
+
+	Detailed information and more samples can be found in the document.
+
+	-->
+
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+Django==1.9
+psycopg2==2.6.1
+Markdown==2.6.5
+bleach==1.4.2
+cloudinary==1.2.0
+pillow==3.1.0
+python-social-auth==0.2.13
+facebook2==2.2.1
